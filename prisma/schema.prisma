@@ -1,0 +1,394 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String             @id @default(cuid())
+  createdAt         DateTime           @default(now())
+  email             String?            @unique
+  name              String
+  password          String?            @db.VarChar(100)
+  updatedAt         DateTime           @updatedAt
+  role              RoleType           @default(STUDENT)
+  accounts          Account[]
+  courseProgress    CourseProgress[]
+  enrollments       Enrollment[]
+  instructorProfile InstructorProfile?
+  notifications     Notification[]
+  orders            Order[]
+  payments          Payment[]
+  reviews           Review[]
+  sessions          Session[]
+  studentProfile    StudentProfile?    
+}
+
+
+
+model StudentProfile {
+  id               String         @id @default(cuid())
+
+  // Academic Details
+  degreeProgram     DegreeProgram
+  studyYear        StudyYear
+  specialization   String?        @db.VarChar(100) 
+  collegeName      String?        @db.VarChar(150)
+  graduationYear   Int?
+  country          String?        @db.VarChar(100)
+
+  // Meta
+  referralSource   ReferralSource
+  phoneNumber      String         @db.VarChar(20)
+
+  // Relations
+  userId           String?        @unique
+  user             User?          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Timestamps
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+}
+
+
+
+model Account {
+  id                String       @id @default(cuid())
+  userId            String
+  providerAccountId String
+  accessToken       String?
+  refreshToken      String?
+  expiresAt         DateTime?
+  provider          ProviderType @default(EMAIL)
+  user              User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Role {
+  id          String           @id @default(cuid())
+  name        RoleType         @unique
+  permissions PermissionType[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+model EmailOtp {
+  id        String   @id @default(cuid())
+  email     String
+  otpHash   String
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([email])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  userId       String
+  sessionToken String   @unique
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model InstructorProfile {
+  id             String   @id @default(cuid())
+  userId         String   @unique
+  bio            String?
+  expertise      String?
+  rating         Float?   @default(0)
+  totalStudents  Int      @default(0)
+  totalCourses   Int      @default(0)
+  seoTitle       String?
+  seoDescription String?
+  seoKeywords    String?
+  metaImage      String?
+  courses        Course[]
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Course {
+  id             String            @id @default(cuid())
+  title          String
+  slug           String            @unique
+  description    String
+  thumbnail      String?
+  price          Float
+  level          CourseLevel
+  categoryId     String
+  instructorId   String
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  published      Boolean           @default(false)
+  totalDuration  Int               @default(0)
+  totalLectures  Int               @default(0)
+  seoTitle       String?
+  seoDescription String?
+  seoKeywords    String?
+  metaImage      String?
+  metaSchema     Json?
+  originalPrice  Float             @default(500)
+  category       Category          @relation(fields: [categoryId], references: [id])
+  instructor     InstructorProfile @relation(fields: [instructorId], references: [id])
+  enrollments    Enrollment[]
+  orders         Order[]
+  payments       Payment[]
+  reviews        Review[]
+  sections       Section[]
+}
+
+model Section {
+  id       String    @id @default(cuid())
+  title    String
+  order    Int
+  courseId String
+  lectures Lecture[]
+  course   Course    @relation(fields: [courseId], references: [id])
+}
+
+model Lecture {
+  id             String           @id @default(cuid())
+  title          String
+  videoUrl       String
+  duration       Int
+  order          Int
+  sectionId      String
+  courseProgress CourseProgress[]
+  section        Section          @relation(fields: [sectionId], references: [id])
+  quiz           Quiz?
+  resources      Resource[]
+}
+
+model Resource {
+  id        String  @id @default(cuid())
+  title     String
+  url       String
+  lectureId String
+  lecture   Lecture @relation(fields: [lectureId], references: [id])
+}
+
+model Quiz {
+  id        String     @id @default(cuid())
+  lectureId String?    @unique
+  questions Question[]
+  lecture   Lecture?   @relation(fields: [lectureId], references: [id])
+}
+
+model Question {
+  id      String @id @default(cuid())
+  text    String
+  options Json
+  answer  String
+  quizId  String
+  quiz    Quiz   @relation(fields: [quizId], references: [id])
+}
+
+model Enrollment {
+  id        String   @id @default(cuid())
+  userId    String
+  courseId  String
+  createdAt DateTime @default(now())
+  progress  Float    @default(0)
+  completed Boolean  @default(false)
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, courseId])
+}
+
+model CourseProgress {
+  id          String    @id @default(cuid())
+  userId      String
+  lectureId   String
+  isCompleted Boolean   @default(false)
+  completedAt DateTime?
+  lecture     Lecture   @relation(fields: [lectureId], references: [id])
+  user        User      @relation(fields: [userId], references: [id])
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  userId    String
+  courseId  String
+  rating    Int
+  comment   String?
+  createdAt DateTime @default(now())
+  course    Course   @relation(fields: [courseId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Category {
+  id             String   @id @default(cuid())
+  name           String
+  slug           String   @unique
+  seoTitle       String?
+  seoDescription String?
+  seoKeywords    String?
+  metaImage      String?
+  courses        Course[]
+}
+
+model Payment {
+  id               String         @id @default(cuid())
+  userId           String
+  courseId         String
+  amount           Float
+  currency         String         @default("USD")
+  paymentStatus    PaymentStatus  @default(PENDING)
+  createdAt        DateTime       @default(now())
+  orderId          String?
+  gateway          PaymentGateway
+  gatewayOrderId   String?
+  gatewayPaymentId String?
+  updatedAt        DateTime       @updatedAt
+  refundId         String?
+  metadata         Json?
+  transactionId    String         @unique
+  course           Course         @relation(fields: [courseId], references: [id])
+  order            Order?         @relation(fields: [orderId], references: [id])
+  user             User           @relation(fields: [userId], references: [id])
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  userId          String
+  courseId        String
+  amount          Float
+  currency        String      @default("USD")
+  status          OrderStatus @default(PENDING)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  paymentId       String?
+  razorpayOrderId String?     @unique
+  refundId        String?
+  course          Course      @relation(fields: [courseId], references: [id])
+  user            User        @relation(fields: [userId], references: [id])
+  payments        Payment[]
+
+  @@index([userId, courseId])
+}
+
+model WebhookLog {
+  id        String   @id @default(cuid())
+  eventId   String?
+  payload   Json
+  createdAt DateTime @default(now())
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  message   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model ContactMessage {
+  id        String        @id @default(cuid())
+  firstName String
+  lastName  String?
+  email     String
+  message   String
+  ipAddress String?
+  userAgent String?
+  status    ContactStatus @default(PENDING)
+  createdAt DateTime      @default(now())
+}
+
+// ENUMS
+
+enum ContactStatus {
+  PENDING
+  READ
+  RESPONDED
+}
+
+enum PaymentStatus {
+  SUCCESS
+  FAILED
+  PENDING
+  REFUNDED
+}
+
+enum CourseLevel {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}
+
+enum RoleType {
+  ADMIN
+  INSTRUCTOR
+  STUDENT
+}
+
+enum ProviderType {
+  EMAIL
+  GOOGLE
+  FACEBOOK
+}
+
+enum PermissionType {
+  MANAGE_USERS
+  MANAGE_COURSES
+  MANAGE_QUIZZES
+  MANAGE_PAYMENTS
+  CREATE_COURSE
+  UPDATE_COURSE
+  DELETE_COURSE
+  VIEW_STUDENTS
+  CREATE_QUIZ
+  ENROLL_COURSE
+  VIEW_COURSE
+  ATTEMPT_QUIZ
+  VIEW_RESULTS
+  ACCESS_ADMIN_PANEL
+  VIEW_ONLY
+}
+
+enum DegreeProgram {
+  BACHELOR_OF_TECHNOLOGY
+  BACHELOR_OF_ENGINEERING
+  BACHELOR_OF_SCIENCE
+  BACHELOR_OF_COMPUTER_APPLICATIONS
+  DIPLOMA
+  WORKING_PROFESSIONAL
+  OTHER
+}
+
+enum StudyYear {
+  FIRST_YEAR
+  SECOND_YEAR
+  THIRD_YEAR
+  FOURTH_YEAR
+  FINAL_YEAR
+  GRADUATED
+}
+
+enum ReferralSource {
+  GOOGLE
+  LINKEDIN
+  INSTAGRAM
+  FRIEND
+  COLLEGE
+  ADVERTISEMENT
+  OTHER
+}
+
+enum OrderStatus {
+  PENDING
+  SUCCESS
+  FAILED
+  REFUNDED
+}
+
+enum PaymentGateway {
+  RAZORPAY
+  STRIPE
+  PAYPAL
+}

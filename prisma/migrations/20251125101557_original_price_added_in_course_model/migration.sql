@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Course" ADD COLUMN     "originalPrice" DOUBLE PRECISION NOT NULL DEFAULT 500;
