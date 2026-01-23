@@ -25,10 +25,14 @@ const appConfig = () => ({
   GOOGLE_CLIENT_SECRET: getEnv("GOOGLE_CLIENT_SECRET"),
   GOOGLE_CALLBACK_URL: getEnv("GOOGLE_CALLBACK_URL"),
 
+  CLOUDINARY_CLOUD_NAME: getEnv("CLOUDINARY_CLOUD_NAME"),
+  CLOUDINARY_API_KEY: getEnv("CLOUDINARY_API_KEY"),
+  CLOUDINARY_API_SECRET: getEnv("CLOUDINARY_API_SECRET"),
+
   FRONTEND_ORIGIN: getEnv("FRONTEND_ORIGIN", "https://maxskill-ai.vercel.app"),
   LOCAL_FRONTEND_ORIGIN: getEnv(
     "LOCAL_FRONTEND_ORIGIN",
-    "http://localhost:3000"
+    "http://localhost:3000",
   ),
 });
 

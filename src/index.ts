@@ -8,13 +8,13 @@ import cookieParser from "cookie-parser";
 import { errorHandler } from "./middlewares/errorHandler.middleware";
 import "./config/passport.config";
 import courseRoutes from "./routes/course.route";
-import cloudinaryRoutes from "./routes/cloudinary.route";
 import { isAuthenticated } from "./middlewares/isAuthenticated.middleware";
 import userRoutes from "./routes/user.routes";
 import paymentRoutes from "./routes/payment.route";
 import enrollmentRoutes from "./routes/enrollment.route";
 import contactUsRoute from "./routes/contact-us.route";
 import profileSetupRoutes from "./routes/profile-setup.route";
+import cloudinaryRoutes from "./routes/cloudinary-uploads.route";
 
 const app = express();
 
@@ -39,7 +39,7 @@ app.use(
     credentials: true, // 👈 critical for cookies
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
-  })
+  }),
 );
 
 app.use(cookieParser());
@@ -64,7 +64,7 @@ app.use(`${config.BASE_PATH}/auth`, authRoutes);
 app.use(
   `${config.BASE_PATH}/profile-setup`,
   isAuthenticated,
-  profileSetupRoutes
+  profileSetupRoutes,
 );
 
 app.use(`${config.BASE_PATH}/user`, isAuthenticated, userRoutes);
@@ -77,12 +77,12 @@ app.use(`${config.BASE_PATH}/enrollments`, isAuthenticated, enrollmentRoutes);
 
 app.use(`${config.BASE_PATH}/contact-us`, contactUsRoute);
 
-app.use("/api/cloudinary", cloudinaryRoutes);
+app.use(`${config.BASE_PATH}`, cloudinaryRoutes);
 
 app.use(errorHandler);
 
 app.listen(config.PORT, async () => {
   console.log(
-    `Server is listening on port ${config.PORT} in ${config.NODE_ENV} http://localhost:${config.PORT}`
+    `Server is listening on port ${config.PORT} in ${config.NODE_ENV} http://localhost:${config.PORT}`,
   );
 });
