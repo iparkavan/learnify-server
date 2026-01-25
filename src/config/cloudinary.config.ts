@@ -6,13 +6,13 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET!,
 });
 
-export const generateUploadSignature = () => {
+export const generateUploadSignature = (folder: string) => {
   const timestamp = Math.round(Date.now() / 1000);
 
   const signature = cloudinary.utils.api_sign_request(
     {
       timestamp,
-      folder: "courses/lectures/videos",
+      folder,
     },
     process.env.CLOUDINARY_API_SECRET!,
   );
@@ -20,6 +20,7 @@ export const generateUploadSignature = () => {
   return {
     timestamp,
     signature,
+    folder,
     apiKey: process.env.CLOUDINARY_API_KEY,
     cloudName: process.env.CLOUDINARY_CLOUD_NAME,
   };
