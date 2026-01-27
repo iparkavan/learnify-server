@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { SectionSchema } from "./section.validation";
 
 export const CourseLevelEnum = z.enum(["BEGINNER", "INTERMEDIATE", "ADVANCED"]);
 
@@ -12,7 +13,7 @@ const baseCourseSchema = z.object({
     .min(3, "Slug is required")
     .regex(
       /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
-      "Slug must be URL-friendly (lowercase, hyphens only)"
+      "Slug must be URL-friendly (lowercase, hyphens only)",
     ),
   description: z
     .string()
@@ -35,6 +36,25 @@ export const createCourseSchema = baseCourseSchema;
 
 // ✅ Update course (all optional)
 export const updateCourseSchema = baseCourseSchema.partial();
+
+export const CourseSchema = z.object({
+  course: z.object({
+    title: z.string().min(3),
+    subtitle: z.string().optional(),
+    description: z.string().min(200),
+    category: z.string().min(2),
+    subcategory: z.string().optional(),
+    level: z.string(),
+    language: z.string(),
+    price: z.number().min(0),
+    thumbnail: z.string().url().optional(),
+    promo_video_url: z.string().url().optional(),
+  }),
+
+  sections: z.array(SectionSchema).default([]),
+});
+
+export type FullCourseData = z.infer<typeof CourseSchema>;
 
 export type CreateCourseType = z.infer<typeof createCourseSchema>;
 export type UpdateCourseType = z.infer<typeof updateCourseSchema>;

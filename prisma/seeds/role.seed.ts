@@ -11,13 +11,6 @@ const RolePermissions: Record<RoleType, PermissionType[]> = {
     PermissionType.MANAGE_QUIZZES,
     PermissionType.MANAGE_PAYMENTS,
     PermissionType.ACCESS_ADMIN_PANEL,
-
-    // Instructor capabilities
-    PermissionType.CREATE_COURSE,
-    PermissionType.UPDATE_COURSE,
-    PermissionType.DELETE_COURSE,
-    PermissionType.VIEW_STUDENTS,
-    PermissionType.CREATE_QUIZ,
   ],
 
   INSTRUCTOR: [

@@ -6,17 +6,16 @@ import {
   verifyOtpController,
 } from "../controllers/auth.controller";
 import passport from "passport";
-import { config } from "../config/app.config";
 import {
-  loginAdminController,
-  signupAdminController,
-} from "../controllers/admin-auth.controller";
+  loginInstructorController,
+  signupInstructorController,
+} from "../controllers/instructor-auth.controller";
 
 const authRoutes = Router();
 
-// ADMIN ROUTES
-authRoutes.post("/admin/signup", signupAdminController);
-authRoutes.post("/admin/login", loginAdminController);
+// INSTRUCTOR ROUTES
+authRoutes.post("/instructor/signup", signupInstructorController);
+authRoutes.post("/instructor/login", loginInstructorController);
 
 // STUDENT ROUTES
 authRoutes.post("/login/send-otp", loginSendOtpController);
@@ -27,7 +26,7 @@ authRoutes.get(
   passport.authenticate("google", {
     scope: ["profile", "email"],
     session: false,
-  })
+  }),
 );
 
 authRoutes.get(
@@ -35,7 +34,7 @@ authRoutes.get(
   passport.authenticate("google", {
     session: false,
   }),
-  googleAuthCallbackController
+  googleAuthCallbackController,
 );
 
 // authRoutes.get("/google/callback", (req, res, next) => {
@@ -65,7 +64,7 @@ authRoutes.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     res.json({ user: req.user });
-  }
+  },
 );
 
 export default authRoutes;

@@ -15,6 +15,8 @@ import enrollmentRoutes from "./routes/enrollment.route";
 import contactUsRoute from "./routes/contact-us.route";
 import profileSetupRoutes from "./routes/profile-setup.route";
 import cloudinaryRoutes from "./routes/cloudinary-uploads.route";
+import sectionRoutes from "./routes/section.route";
+import lectureRoutes from "./routes/lecture.route";
 
 const app = express();
 
@@ -69,7 +71,11 @@ app.use(
 
 app.use(`${config.BASE_PATH}/user`, isAuthenticated, userRoutes);
 
-app.use(`${config.BASE_PATH}/courses`, courseRoutes);
+app.use(`${config.BASE_PATH}/course`, courseRoutes);
+
+app.use(`${config.BASE_PATH}/section`, sectionRoutes);
+
+app.use(`${config.BASE_PATH}/lecture`, lectureRoutes);
 
 app.use(`${config.BASE_PATH}/payment`, isAuthenticated, paymentRoutes);
 

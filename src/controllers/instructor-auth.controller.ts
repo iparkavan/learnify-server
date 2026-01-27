@@ -1,27 +1,27 @@
 import { Request, Response } from "express";
 import {
-  createAdminUserService,
-  loginAdminUserService,
-} from "../services/admin-auth.service";
+  createInstructorUserService,
+  loginInstructorUserService,
+} from "../services/instructor-auth.service";
 import { HTTPSTATUS } from "../config/http.config";
 import { asyncHandler } from "../middlewares/asyncHandler.middleware";
 
-export const signupAdminController = asyncHandler(
+export const signupInstructorController = asyncHandler(
   async (req: Request, res: Response) => {
     const { name, email, password } = req.body;
-    const user = await createAdminUserService({
+    const user = await createInstructorUserService({
       name,
       email,
       password,
     });
     res.status(HTTPSTATUS.OK).json({ success: true, user });
-  }
+  },
 );
 
-export const loginAdminController = asyncHandler(
+export const loginInstructorController = asyncHandler(
   async (req: Request, res: Response) => {
     const { email, password } = req.body;
-    const result = await loginAdminUserService({ email, password });
+    const result = await loginInstructorUserService({ email, password });
     res.status(HTTPSTATUS.OK).json({ success: true, ...result });
-  }
+  },
 );

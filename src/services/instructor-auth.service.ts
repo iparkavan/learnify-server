@@ -6,7 +6,7 @@ import { BadRequestException } from "../utils/app-error";
 
 const prisma = new PrismaClient();
 
-export const createAdminUserService = async (data: {
+export const createInstructorUserService = async (data: {
   name: string;
   email: string;
   password: string;
@@ -17,7 +17,9 @@ export const createAdminUserService = async (data: {
     // 1️⃣ Check if user already exists
     const existingUser = await tx.user.findUnique({ where: { email } });
     if (existingUser) {
-      throw new BadRequestException("Admin with this email already exists");
+      throw new BadRequestException(
+        "Instructor with this email already exists",
+      );
     }
 
     // 2️⃣ Hash password
@@ -29,7 +31,7 @@ export const createAdminUserService = async (data: {
         email,
         name,
         password: hashedPassword,
-        role: RoleType.ADMIN,
+        role: RoleType.INSTRUCTOR,
       },
     });
 
@@ -44,6 +46,12 @@ export const createAdminUserService = async (data: {
       },
     });
 
+    await tx.instructorProfile.create({
+      data: {
+        userId: newUser.id,
+      },
+    });
+
     // 5️⃣ Generate JWT
     const token = signJwt({
       id: newUser.id,
@@ -53,14 +61,14 @@ export const createAdminUserService = async (data: {
     });
 
     return {
-      message: "Admin registered successfully",
+      message: "Instructor registered successfully",
       user: newUser,
       token,
     };
   });
 };
 
-export const loginAdminUserService = async (data: {
+export const loginInstructorUserService = async (data: {
   email: string;
   password: string;
 }) => {
@@ -69,7 +77,7 @@ export const loginAdminUserService = async (data: {
   return await prisma.$transaction(async (tx) => {
     // 1️⃣ Find user
     const user = await tx.user.findUnique({ where: { email } });
-    if (!user || user.role !== RoleType.ADMIN) {
+    if (!user || user.role !== RoleType.INSTRUCTOR) {
       throw new Error("Invalid credentials");
     }
 
