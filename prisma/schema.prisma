@@ -24,36 +24,32 @@ model User {
   payments          Payment[]
   reviews           Review[]
   sessions          Session[]
-  studentProfile    StudentProfile?    
+  studentProfile    StudentProfile?
 }
-
-
 
 model StudentProfile {
-  id               String         @id @default(cuid())
+  id String @id @default(cuid())
 
   // Academic Details
-  degreeProgram     DegreeProgram
-  studyYear        StudyYear
-  specialization   String?        @db.VarChar(100) 
-  collegeName      String?        @db.VarChar(150)
-  graduationYear   Int?
-  country          String?        @db.VarChar(100)
+  degreeProgram  DegreeProgram
+  studyYear      StudyYear
+  specialization String?       @db.VarChar(100)
+  collegeName    String?       @db.VarChar(150)
+  graduationYear Int?
+  country        String?       @db.VarChar(100)
 
   // Meta
-  referralSource   ReferralSource
-  phoneNumber      String         @db.VarChar(20)
+  referralSource ReferralSource
+  phoneNumber    String         @db.VarChar(20)
 
   // Relations
-  userId           String?        @unique
-  user             User?          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String? @unique
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   // Timestamps
-  createdAt        DateTime       @default(now())
-  updatedAt        DateTime       @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
-
-
 
 model Account {
   id                String       @id @default(cuid())
@@ -117,6 +113,7 @@ model Course {
   slug           String            @unique
   description    String
   thumbnail      String?
+  promoVideo     String?
   price          Float
   level          CourseLevel
   categoryId     String
@@ -124,7 +121,7 @@ model Course {
   createdAt      DateTime          @default(now())
   updatedAt      DateTime          @updatedAt
   published      Boolean           @default(false)
-  status String
+  status         String
   totalDuration  Int               @default(0)
   totalLectures  Int               @default(0)
   seoTitle       String?
@@ -167,43 +164,41 @@ model Section {
 // }
 
 model Lecture {
-  id         String      @id @default(cuid())
-  title      String
-  type       LectureType
-  order       Int
+  id    String      @id @default(cuid())
+  title String
+  type  LectureType
+  order Int
 
-  sectionId  String
-  section    Section @relation(fields: [sectionId], references: [id])
+  sectionId String
+  section   Section @relation(fields: [sectionId], references: [id])
 
-  video      Video?   // 🔥 separate relation
-  quiz       Quiz?
-  resources  Resource[]
+  video     Video? // 🔥 separate relation
+  quiz      Quiz?
+  resources Resource[]
 
-  assignments Assignment[]
-  codingExercises CodingExercise[]
+  assignments      Assignment[]
+  codingExercises  CodingExercise[]
   courseProgresses CourseProgress[]
 }
 
 model Video {
-  id           String   @id @default(cuid())
+  id           String  @id @default(cuid())
   title        String?
-  originalUrl  String   // uploaded file (S3 / Cloudinary / R2)
-  streamUrl    String?  // HLS/DASH streaming URL
+  originalUrl  String // uploaded file (S3 / Cloudinary / R2)
+  streamUrl    String? // HLS/DASH streaming URL
   thumbnailUrl String?
-  duration     Int?     // in seconds
-  size         Float?   // MB
-  format       String?  // mp4, mov, webm
+  duration     Int? // in seconds
+  size         Float? // MB
+  format       String? // mp4, mov, webm
 
-  status       VideoStatus @default(PROCESSING)
+  status VideoStatus @default(PROCESSING)
 
-  lectureId    String  @unique
-  lecture      Lecture @relation(fields: [lectureId], references: [id])
+  lectureId String  @unique
+  lecture   Lecture @relation(fields: [lectureId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
-
-
 
 model Resource {
   id        String  @id @default(cuid())
@@ -230,24 +225,22 @@ model Question {
 }
 
 model Assignment {
-  id            String @id @default(cuid())
-  lectureId      String @unique
-  instructions   String
-  estimatedTime  Int
-  lecture        Lecture @relation(fields: [lectureId], references: [id])
-}
-
-
-model CodingExercise {
-  id           String @id @default(cuid())
-  lectureId     String @unique
-  problem       String
-  starterCode   String
-  solutionCode  String
-  testCases     Json
+  id            String  @id @default(cuid())
+  lectureId     String  @unique
+  instructions  String
+  estimatedTime Int
   lecture       Lecture @relation(fields: [lectureId], references: [id])
 }
 
+model CodingExercise {
+  id           String  @id @default(cuid())
+  lectureId    String  @unique
+  problem      String
+  starterCode  String
+  solutionCode String
+  testCases    Json
+  lecture      Lecture @relation(fields: [lectureId], references: [id])
+}
 
 model Enrollment {
   id        String   @id @default(cuid())

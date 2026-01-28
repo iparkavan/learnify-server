@@ -38,20 +38,32 @@ export const createCourseSchema = baseCourseSchema;
 export const updateCourseSchema = baseCourseSchema.partial();
 
 export const CourseSchema = z.object({
-  course: z.object({
-    title: z.string().min(3),
-    subtitle: z.string().optional(),
-    description: z.string().min(200),
-    category: z.string().min(2),
-    subcategory: z.string().optional(),
-    level: z.string(),
-    language: z.string(),
-    price: z.number().min(0),
-    thumbnail: z.string().url().optional(),
-    promo_video_url: z.string().url().optional(),
-  }),
+  courseData: z.object({
+    course: z.object({
+      title: z.string().min(3),
+      subtitle: z.string().optional(),
+      description: z.string().min(100),
+      category: z.string().min(2),
+      subcategory: z.string().optional(),
+      level: z.string(),
+      language: z.string(),
 
-  sections: z.array(SectionSchema).default([]),
+      // FIX: coerce number
+      price: z.coerce.number().min(0),
+
+      thumbnail: z.string().url().optional(),
+
+      // FIX: accept promoVideo OR promo_video_url
+      promoVideo: z
+        .string()
+        .url()
+        .optional()
+        .or(z.literal(""))
+        .transform((v) => (v === "" ? undefined : v)),
+    }),
+
+    sections: z.array(SectionSchema).default([]),
+  }),
 });
 
 export type FullCourseData = z.infer<typeof CourseSchema>;

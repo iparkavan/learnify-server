@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import * as service from "../services/course.service";
 import { asyncHandler } from "../middlewares/asyncHandler.middleware";
 import { HTTPSTATUS } from "../config/http.config";
+import { FullCourseData } from "../validations/course.validation";
 
 export const saveCourseController = asyncHandler(async (req, res) => {
   const instructorId = req.user?.id; // from auth middleware
@@ -12,11 +13,9 @@ export const saveCourseController = asyncHandler(async (req, res) => {
   console.log("courseData", courseData);
   // const courseImageUrl = req.body.courseImageUrl;
   // const promoVideoUrl = req.body.promoVideoUrl;
+  const data = req.body as FullCourseData;
 
-  const courseId = await service.saveCompleteCourseService(
-    courseData,
-    instructorId!,
-  );
+  const courseId = await service.saveCompleteCourseService(data, instructorId!);
 
   res.status(HTTPSTATUS.CREATED).json({ success: true, courseId });
 });

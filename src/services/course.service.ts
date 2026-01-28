@@ -2,49 +2,54 @@ import { prisma } from "../config/prisma.config";
 import slugify from "slugify";
 import { asyncHandler } from "../middlewares/asyncHandler.middleware";
 import { FullCourseData } from "../validations/course.validation";
-import { CourseLevel } from "@prisma/client";
-
+import { CourseLevel, LectureType } from "@prisma/client";
+import { NotFoundException } from "../utils/app-error";
 export const saveCompleteCourseService = async (
   data: FullCourseData,
   instructorId: string,
 ) => {
   return prisma.$transaction(async (tx) => {
-    // Validate instructor
-    const user = await tx.user.findUnique({
-      where: { id: instructorId },
-    });
+    // const { courseData } = data;
+    const courseData = data.courseData;
+    const courseInput = courseData.course;
 
-    if (!user) {
-      throw new Error("User not found");
-    }
+    // Validate instructor
+    const user = await tx.user.findUnique({ where: { id: instructorId } });
+    if (!user) throw new NotFoundException("User not found");
 
     const instructor = await tx.instructorProfile.findUnique({
-      where: {
-        userId: user.id,
-      },
+      where: { userId: user.id },
     });
+    if (!instructor) throw new NotFoundException("Instructor not found");
 
-    if (!instructor) {
-      throw new Error("Instructor not found");
+    // Generate unique slug
+    let baseSlug = slugify(courseInput.title, { lower: true });
+    let slug = baseSlug;
+    let count = 1;
+
+    while (await tx.course.findUnique({ where: { slug } })) {
+      slug = `${baseSlug}-${count++}`;
     }
 
+    // Create course
     const course = await tx.course.create({
       data: {
-        title: data.course.title,
-        description: data.course.description,
+        title: courseInput.title,
+        description: courseInput.description,
         instructorId: instructor.id,
-        slug: slugify(data.course.title),
-        price: data.course.price,
-        level: data.course.level as CourseLevel,
-        categoryId: data.course.category,
-        thumbnail: data.course.thumbnail,
-        // promoVideo: data.course.promo_video_url,
+        slug,
+        price: courseInput.price,
+        level: courseInput.level as CourseLevel,
+        categoryId: courseInput.category,
+        thumbnail: courseInput.thumbnail,
+        promoVideo: courseInput.promoVideo,
         status: "DRAFT",
       },
     });
 
-    for (let secIndex = 0; secIndex < data.sections.length; secIndex++) {
-      const section = data.sections[secIndex];
+    // Sections + Lectures
+    for (let secIndex = 0; secIndex < courseData.sections.length; secIndex++) {
+      const section = courseData.sections[secIndex];
 
       const savedSection = await tx.section.create({
         data: {
@@ -55,17 +60,17 @@ export const saveCompleteCourseService = async (
       });
 
       if (section.lectures?.length) {
-        const lectures = section.lectures.map((lecture, lIndex) => ({
-          sectionId: savedSection.id,
-          title: lecture.title || `Lecture ${lIndex + 1}`,
-          type: lecture.type,
-          duration: lecture.duration,
-          contentUrl: lecture.content_url,
-          hasContent: lecture.has_content,
-          order: lIndex,
-        }));
-
-        await tx.lecture.createMany({ data: lectures });
+        await tx.lecture.createMany({
+          data: section.lectures.map((lecture, lIndex) => ({
+            sectionId: savedSection.id,
+            title: lecture.title || `Lecture ${lIndex + 1}`,
+            type: lecture.type as LectureType,
+            duration: lecture.duration,
+            contentUrl: lecture.content_url,
+            hasContent: lecture.has_content,
+            order: lIndex,
+          })),
+        });
       }
     }
 

@@ -89,6 +89,6 @@ app.use(errorHandler);
 
 app.listen(config.PORT, async () => {
   console.log(
-    `Server is listening on port ${config.PORT} in ${config.NODE_ENV} http://localhost:${config.PORT}`,
+    `✅ Server is listening on port ${config.PORT} in ${config.NODE_ENV} http://localhost:${config.PORT}`,
   );
 });

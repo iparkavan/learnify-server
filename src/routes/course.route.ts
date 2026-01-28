@@ -3,6 +3,8 @@ import * as controller from "../controllers/course.controller";
 import { isAuthenticated } from "../middlewares/isAuthenticated.middleware";
 import { requirePermission } from "../middlewares/requirePermission.middleware";
 import { PermissionType } from "@prisma/client";
+import { validateSchema } from "../utils/validateSchema";
+import { CourseSchema } from "../validations/course.validation";
 
 const courseRoutes = Router();
 
@@ -10,6 +12,7 @@ courseRoutes.post(
   "/save-full-course",
   isAuthenticated,
   requirePermission(PermissionType.CREATE_COURSE),
+  validateSchema(CourseSchema),
   controller.saveCourseController,
 );
 
