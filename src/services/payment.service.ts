@@ -1,12 +1,13 @@
-import { prisma } from "../config/prisma.config";
+// import { prisma } from "../config/prisma.config";
 import { razorpayConfig } from "../config/razorpay.config";
 import crypto from "crypto";
+import { prisma } from "../lib/schema";
 
 // Create a payment for an order
 export const createPaymentService = async (
   userId: string,
   courseId: string,
-  gateway: "RAZORPAY"
+  gateway: "RAZORPAY",
 ) => {
   // 1️⃣ Fetch course
   const course = await prisma.course.findUnique({ where: { id: courseId } });
@@ -123,7 +124,7 @@ export const verifyRazorpayPaymentService = async (data: {
 
 export const handleRazorpayWebhookService = async (
   rawBody: Buffer,
-  signature: string
+  signature: string,
 ) => {
   const webhookSecret = process.env.RAZORPAY_WEBHOOK_SECRET!;
   const expectedSignature = crypto
@@ -238,7 +239,7 @@ export const refundPayment = async (paymentId: string) => {
     payment.gatewayPaymentId,
     {
       amount: payment.amount * 100, // in paise
-    }
+    },
   );
 
   // 3️⃣ Update Payment and Order

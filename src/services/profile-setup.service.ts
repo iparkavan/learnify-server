@@ -1,17 +1,24 @@
-import { prisma } from "../config/prisma.config";
+// import { prisma } from "../config/prisma.config";
 import { HTTPSTATUS } from "../config/http.config";
 import { StudentProfileSetupValidationType } from "../validations/profile-setup.validation";
+// import {
+//   DegreeProgram,
+//   ReferralSource,
+//   StudentProfile,
+//   StudyYear,
+// } from "@prisma/client";
+import { AppError } from "../utils/app-error";
+import { prisma } from "../lib/schema";
 import {
   DegreeProgram,
   ReferralSource,
   StudentProfile,
   StudyYear,
-} from "@prisma/client";
-import { AppError } from "../utils/app-error";
+} from "../generated/prisma/client";
 
 const studentProfileSetupService = async (
   profileData: StudentProfileSetupValidationType,
-  userId: string | undefined
+  userId: string | undefined,
 ): Promise<StudentProfile> => {
   if (!userId) {
     throw new AppError("Unauthorized", HTTPSTATUS.UNAUTHORIZED);

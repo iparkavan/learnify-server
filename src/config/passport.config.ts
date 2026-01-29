@@ -2,11 +2,12 @@
 import passport from "passport";
 import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import { PrismaClient, ProviderType, RoleType } from "@prisma/client";
+// import { PrismaClient, ProviderType, RoleType } from "@prisma/client";
 import { config } from "./app.config";
 import { handleGoogleAuth } from "../services/auth.service";
+import { prisma } from "../lib/schema";
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 const JWT_SECRET = config.JWT_SECRET || "your-secret";
 
 passport.use(
@@ -25,8 +26,8 @@ passport.use(
       } catch (err) {
         return done(err, false);
       }
-    }
-  )
+    },
+  ),
 );
 
 /* -------------------------------------------------------------------------- */
@@ -44,14 +45,14 @@ passport.use(
         const result = await handleGoogleAuth(
           profile,
           accessToken,
-          refreshToken
+          refreshToken,
         );
         return done(null, result);
       } catch (error) {
         return done(error, undefined);
       }
-    }
-  )
+    },
+  ),
 );
 
 export default passport;

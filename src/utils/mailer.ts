@@ -1,7 +1,7 @@
 import sgMail from "@sendgrid/mail";
 
 // Configure SendGrid
-const sendGridApiKey = process.env.SENDGRID_API_KEY;
+const sendGridApiKey = process.env.SENDGRID_API_KEY!;
 if (!sendGridApiKey) {
   throw new Error("SENDGRID_API_KEY environment variable is not defined");
 }
@@ -10,7 +10,7 @@ sgMail.setApiKey(sendGridApiKey);
 const verifiedSender = process.env.SENDGRID_VERIFIED_SENDER;
 if (!verifiedSender) {
   throw new Error(
-    "SENDGRID_VERIFIED_SENDER environment variable is not defined"
+    "SENDGRID_VERIFIED_SENDER environment variable is not defined",
   );
 }
 
@@ -26,8 +26,8 @@ export async function sendOtpEmail(to: string, otp: string | number) {
   if (otpCooldownMap[to] && now - otpCooldownMap[to] < COOLDOWN_MS) {
     throw new Error(
       `OTP was sent recently. Please wait ${Math.ceil(
-        (COOLDOWN_MS - (now - otpCooldownMap[to])) / 1000
-      )} seconds before requesting again.`
+        (COOLDOWN_MS - (now - otpCooldownMap[to])) / 1000,
+      )} seconds before requesting again.`,
     );
   }
 
@@ -54,11 +54,12 @@ export async function sendOtpEmail(to: string, otp: string | number) {
   } catch (error: any) {
     console.error(
       "❌ SendGrid Error:",
-      error.response?.body || error.message || error
+      error.response?.body || error.message || error,
     );
     throw new Error("Failed to send OTP email. Please try again later.");
   }
 }
+
 export const sendEmailToAdmin = async ({
   firstName,
   lastName,

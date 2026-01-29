@@ -1,10 +1,10 @@
-import { PrismaClient, ProviderType, RoleType } from "@prisma/client";
+// import { ProviderType, RoleType } from "@prisma/client";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { signJwt } from "../utils/jwt";
 import { BadRequestException } from "../utils/app-error";
-
-const prisma = new PrismaClient();
+import { prisma } from "../lib/schema";
+import { ProviderType, RoleType } from "../generated/prisma/enums";
 
 export const createInstructorUserService = async (data: {
   name: string;

@@ -1,7 +1,9 @@
 import { Request, Response, NextFunction } from "express";
-import { PrismaClient, PermissionType } from "@prisma/client";
+import { PermissionType } from "../generated/prisma/enums";
+import { prisma } from "../lib/schema";
+// import { PrismaClient, PermissionType } from "@prisma/client";
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 
 // Middleware to check if user has required permission
 export const requirePermission = (permission: PermissionType) => {

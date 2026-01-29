@@ -1,6 +1,7 @@
 import Razorpay from "razorpay";
 import crypto from "crypto";
-import { prisma } from "../config/prisma.config";
+import { prisma } from "../lib/schema";
+// import { prisma } from "../config/prisma.config";
 
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID!,
@@ -42,7 +43,7 @@ export const createOrderService = async (userId: string, courseId: string) => {
 export const verifyPaymentService = async (
   razorpay_order_id: string,
   razorpay_payment_id: string,
-  razorpay_signature: string
+  razorpay_signature: string,
 ) => {
   // Validate signature
   const generated_signature = crypto
@@ -80,7 +81,7 @@ export const verifyPaymentService = async (
 // Handle Razorpay Webhook
 export const razorpayWebhookService = async (
   payload: any,
-  signature: string
+  signature: string,
 ) => {
   const secret = process.env.RAZORPAY_WEBHOOK_SECRET!;
   const expectedSignature = crypto

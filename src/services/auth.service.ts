@@ -1,7 +1,9 @@
-import { PrismaClient, ProviderType, RoleType, User } from "@prisma/client";
+// import { PrismaClient, ProviderType, RoleType, User } from "@prisma/client";
 import { signJwt } from "../utils/jwt";
+import { prisma } from "../lib/schema";
+import { ProviderType, RoleType } from "../generated/prisma/enums";
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 
 export interface AuthInput {
   email: string;
@@ -177,7 +179,7 @@ export const signInOrCreateUser = async (data: AuthInput) => {
 export const studentOrInstructorSignInWithOtp = async (
   email: string,
   name?: string,
-  type: "STUDENT" | "INSTRUCTOR" = "STUDENT"
+  type: "STUDENT" | "INSTRUCTOR" = "STUDENT",
 ) => {
   return await signInOrCreateUser({
     email,
@@ -195,7 +197,7 @@ export const handleGoogleAuth = async (
   profile: any,
   accessToken: string,
   refreshToken: string,
-  type: "STUDENT" | "INSTRUCTOR" = "STUDENT"
+  type: "STUDENT" | "INSTRUCTOR" = "STUDENT",
 ) => {
   const email = profile.emails?.[0]?.value;
   const name = profile.displayName;

@@ -9,11 +9,13 @@
     "skipLibCheck": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "types": ["node", "express"]
+    "types": ["node", "express"],
+    "paths": {
+      "@prisma/client": ["./src/generated/prisma"]
+    }
   },
   "include": ["src/**/*.ts", "src/types/**/*.d.ts"]
 }
-
 
 // {
 //   "compilerOptions": {

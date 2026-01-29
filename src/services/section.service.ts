@@ -1,7 +1,7 @@
 // src/modules/section/section.service.ts
 
-import { Section } from "@prisma/client";
-import { prisma } from "../config/prisma.config";
+import { prisma } from "../lib/schema";
+// import { prisma } from "../config/prisma.config";
 
 export const createSection = (courseId: string, data: any) => {
   return prisma.section.create({

@@ -10,8 +10,8 @@ import { HTTPSTATUS } from "../config/http.config";
 import { asyncHandler } from "../middlewares/asyncHandler.middleware";
 import { config } from "../config/app.config";
 import { BadRequestException, NotFoundException } from "../utils/app-error";
-import { prisma } from "../config/prisma.config";
 import { studentOrInstructorSignInWithOtp } from "../services/auth.service";
+import { prisma } from "../lib/schema";
 
 export const loginSendOtpController = asyncHandler(
   async (req: Request, res: Response) => {
@@ -30,7 +30,7 @@ export const loginSendOtpController = asyncHandler(
       email,
       name: user.name, // Use name from DB
     });
-  }
+  },
 );
 
 export const signupSendOtpController = asyncHandler(
@@ -54,7 +54,7 @@ export const signupSendOtpController = asyncHandler(
       email,
       name,
     });
-  }
+  },
 );
 
 export const verifyOtpController = asyncHandler(
@@ -71,7 +71,7 @@ export const verifyOtpController = asyncHandler(
     const { message, user, token } = await studentOrInstructorSignInWithOtp(
       email,
       name,
-      type
+      type,
     );
 
     // Set token in header
@@ -82,7 +82,7 @@ export const verifyOtpController = asyncHandler(
       user,
       token, // optional in body
     });
-  }
+  },
 );
 
 export const googleAuthCallbackController = (req: Request, res: Response) => {
@@ -102,7 +102,7 @@ export const googleAuthCallbackController = (req: Request, res: Response) => {
 
   // Option 1: Redirect to frontend with token
   return res.redirect(
-    `${redirectOrigin}/auth/success?token=${token}&user=${encodedUser}`
+    `${redirectOrigin}/auth/success?token=${token}&user=${encodedUser}`,
   );
 };
 

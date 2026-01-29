@@ -1,6 +1,8 @@
 // src/modules/lecture/lecture.service.ts
 
-import { prisma } from "../config/prisma.config";
+import { prisma } from "../lib/schema";
+
+// import { prisma } from "../config/prisma.config";
 
 // export const createLecture = (sectionId: string, data: any) => {
 //   return prisma.lecture.create({

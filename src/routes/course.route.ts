@@ -2,9 +2,9 @@ import { Router } from "express";
 import * as controller from "../controllers/course.controller";
 import { isAuthenticated } from "../middlewares/isAuthenticated.middleware";
 import { requirePermission } from "../middlewares/requirePermission.middleware";
-import { PermissionType } from "@prisma/client";
 import { validateSchema } from "../utils/validateSchema";
 import { CourseSchema } from "../validations/course.validation";
+import { PermissionType } from "../generated/prisma/enums";
 
 const courseRoutes = Router();
 

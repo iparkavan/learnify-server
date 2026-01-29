@@ -1,7 +1,8 @@
-import "dotenv/config";
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import cors from "cors";
-import { config } from "./config/app.config";
 import authRoutes from "./routes/auth.route";
 import passport from "passport";
 import cookieParser from "cookie-parser";
@@ -17,6 +18,7 @@ import profileSetupRoutes from "./routes/profile-setup.route";
 import cloudinaryRoutes from "./routes/cloudinary-uploads.route";
 import sectionRoutes from "./routes/section.route";
 import lectureRoutes from "./routes/lecture.route";
+import { config } from "./config/app.config";
 
 const app = express();
 

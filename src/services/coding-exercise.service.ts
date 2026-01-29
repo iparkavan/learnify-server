@@ -1,4 +1,6 @@
-import { prisma } from "../config/prisma.config";
+// import { prisma } from "../config/prisma.config";
+
+import { prisma } from "../lib/schema";
 
 export const createCodingExercise = async (lectureId: string, data: any) => {
   return prisma.codingExercise.create({

@@ -1,9 +1,11 @@
-import { prisma } from "../config/prisma.config";
+// import { prisma } from "../config/prisma.config";
 import slugify from "slugify";
 import { asyncHandler } from "../middlewares/asyncHandler.middleware";
 import { FullCourseData } from "../validations/course.validation";
-import { CourseLevel, LectureType } from "@prisma/client";
 import { NotFoundException } from "../utils/app-error";
+import { prisma } from "../lib/schema";
+import { CourseLevel, LectureType } from "../generated/prisma/enums";
+
 export const saveCompleteCourseService = async (
   data: FullCourseData,
   instructorId: string,

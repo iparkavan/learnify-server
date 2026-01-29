@@ -1,4 +1,5 @@
-import { prisma } from "../config/prisma.config";
+// import { prisma } from "../config/prisma.config";
+import { prisma } from "../lib/schema";
 import { sendAutoReply, sendEmailToAdmin } from "../utils/mailer";
 
 export const contactUsService = async (body: {

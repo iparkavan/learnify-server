@@ -1,9 +1,7 @@
 // services/otpService.ts
-import { PrismaClient } from "@prisma/client";
 import { sendOtpEmail } from "../utils/mailer";
 import { compareValue, hashValue } from "../utils/bcrypt";
-
-const prisma = new PrismaClient();
+import { prisma } from "../lib/schema";
 
 // Generate and send OTP
 export const generateOtp = async (email: string) => {
