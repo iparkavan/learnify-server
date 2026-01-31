@@ -1,6 +1,16 @@
-import { PrismaClient } from "@prisma/client";
+// import { PrismaClient } from "../../src/generated/prisma/client";
+// import { PrismaPg } from "@prisma/adapter-pg";
+// import pg from "pg";
+// import "dotenv/config";
 
-const prisma = new PrismaClient();
+// // Setup the Driver Adapter for Prisma 7
+// const { Pool } = pg;
+// const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+// const adapter = new PrismaPg(pool);
+
+// const prisma = new PrismaClient({ adapter });
+
+import { prisma } from "../../src/lib/schema";
 
 async function main() {
   console.log("🌱 Seeding categories...");

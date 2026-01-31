@@ -1,6 +1,9 @@
-import { PrismaClient, RoleType, PermissionType } from "@prisma/client";
+// import { PrismaClient, RoleType, PermissionType } from "@prisma/client";
 
-const prisma = new PrismaClient();
+import { PermissionType, RoleType } from "../../src/generated/prisma/enums";
+import { prisma } from "../../src/lib/schema";
+
+// const prisma = new PrismaClient();
 
 // Merge instructor permissions into admin
 const RolePermissions: Record<RoleType, PermissionType[]> = {

@@ -62,17 +62,39 @@ export const saveCompleteCourseService = async (
       });
 
       if (section.lectures?.length) {
-        await tx.lecture.createMany({
-          data: section.lectures.map((lecture, lIndex) => ({
-            sectionId: savedSection.id,
-            title: lecture.title || `Lecture ${lIndex + 1}`,
-            type: lecture.type as LectureType,
-            duration: lecture.duration,
-            contentUrl: lecture.content_url,
-            hasContent: lecture.has_content,
-            order: lIndex,
-          })),
-        });
+        //   await tx.lecture.createMany({
+        //     data: section.lectures.map((lecture, lIndex) => ({
+        //       sectionId: savedSection.id,
+        //       title: lecture.title || `Lecture ${lIndex + 1}`,
+        //       type: lecture.type as LectureType,
+        //       duration: lecture.duration,
+        //       contentUrl: lecture.content_url,
+        //       hasContent: lecture.has_content,
+        //       order: lIndex,
+        //     })),
+        //   });
+        // }
+
+        for (let lecIndex = 0; lecIndex < section.lectures.length; lecIndex++) {
+          const lecture = section.lectures[lecIndex];
+          await tx.lecture.create({
+            data: {
+              title: lecture.title!,
+              order: lecIndex,
+              type: lecture.type,
+              sectionId: savedSection.id,
+
+              ...(lecture.type === "VIDEO" && {
+                video: {
+                  create: {
+                    originalUrl: lecture.content_url ?? "",
+                    duration: lecture.duration,
+                  },
+                },
+              }),
+            },
+          });
+        }
       }
     }
 
