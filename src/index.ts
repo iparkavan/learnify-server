@@ -73,7 +73,7 @@ app.use(
 
 app.use(`${config.BASE_PATH}/user`, isAuthenticated, userRoutes);
 
-app.use(`${config.BASE_PATH}/course`, courseRoutes);
+app.use(`${config.BASE_PATH}/courses`, courseRoutes);
 
 app.use(`${config.BASE_PATH}/section`, sectionRoutes);
 

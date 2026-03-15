@@ -6,6 +6,25 @@ import { NotFoundException } from "../utils/app-error";
 import { prisma } from "../lib/schema";
 import { CourseLevel, LectureType } from "../generated/prisma/enums";
 
+export const getAllCoursesService = async () => {
+  return prisma.course.findMany({
+    include: {
+      category: true,
+      instructor: {
+        include: {
+          user: { select: { id: true, name: true, email: true } },
+        },
+      },
+      _count: {
+        select: {
+          reviews: true,
+          enrollments: true,
+        },
+      },
+    },
+  });
+};
+
 export const saveCompleteCourseService = async (
   data: FullCourseData,
   instructorId: string,
@@ -390,25 +409,6 @@ export const validateBeforePublish = async (courseId: string) => {
 // //     return updatedCourse;
 // //   });
 // // };
-
-// export const getAllCoursesService = async () => {
-//   return prisma.course.findMany({
-//     include: {
-//       category: true,
-//       instructor: {
-//         include: {
-//           user: { select: { id: true, name: true, email: true } },
-//         },
-//       },
-//       _count: {
-//         select: {
-//           reviews: true,
-//           enrollments: true,
-//         },
-//       },
-//     },
-//   });
-// };
 
 // // export const getAllCoursesService = async () => {
 // //   const coursesRaw = await prisma.course.findMany({

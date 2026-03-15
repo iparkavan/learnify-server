@@ -16,6 +16,13 @@ courseRoutes.post(
   controller.saveCourseController,
 );
 
+courseRoutes.get(
+  "/",
+  // isAuthenticated,
+  // controller.createCourse,
+  controller.getAllCoursesController,
+);
+
 courseRoutes.post(
   "/create-course",
   isAuthenticated,

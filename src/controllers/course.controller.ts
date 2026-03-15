@@ -5,6 +5,12 @@ import { asyncHandler } from "../middlewares/asyncHandler.middleware";
 import { HTTPSTATUS } from "../config/http.config";
 import { FullCourseData } from "../validations/course.validation";
 
+// 📚 Get All Courses
+export const getAllCoursesController = asyncHandler(async (req, res) => {
+  const courses = await service.getAllCoursesService();
+  res.status(HTTPSTATUS.OK).json(courses);
+});
+
 export const saveCourseController = asyncHandler(async (req, res) => {
   const instructorId = req.user?.id; // from auth middleware
   const courseData = req.body.courseData;
