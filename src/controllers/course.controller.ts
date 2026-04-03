@@ -7,6 +7,8 @@ import { FullCourseData } from "../validations/course.validation";
 
 // 📚 Get All Courses
 export const getAllCoursesController = asyncHandler(async (req, res) => {
+  // const query = req.params
+
   const courses = await service.getAllCoursesService();
   res.status(HTTPSTATUS.OK).json(courses);
 });
@@ -33,7 +35,11 @@ export const createCourse = async (req: Request, res: Response) => {
 };
 
 export const getCourse = async (req: Request, res: Response) => {
-  const course = await service.getCourse(req.params.id);
+  const { slug } = req.params;
+
+  const slugValue = Array.isArray(slug) ? slug[0] : slug;
+
+  const course = await service.getCourse(slugValue);
   res.json(course);
 };
 
@@ -102,13 +108,15 @@ export const deleteCourse = async (req: Request, res: Response) => {
 // });
 
 // // 🔍 Get Course by ID
-// export const getCourseByIdController = asyncHandler(
-//   async (req: Request, res: Response) => {
-//     const { slug } = req.params;
-//     const course = await getCourseByIdService(slug);
-//     res.json(course);
-//   }
-// );
+export const getCourseByIdController = asyncHandler(
+  async (req: Request, res: Response) => {
+    const { slug } = req.params;
+    console.log("slug", slug);
+
+    const course = await service.getCourseByIdService(slug);
+    res.json(course);
+  },
+);
 
 // // 🗑️ Delete Course
 // export const deleteCourseController = asyncHandler(

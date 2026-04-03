@@ -29,7 +29,7 @@ courseRoutes.post(
   requirePermission(PermissionType.CREATE_COURSE),
   controller.createCourse,
 );
-courseRoutes.get("/:id", controller.getCourse);
+courseRoutes.get("/:slug", controller.getCourse);
 courseRoutes.put(
   "/:id",
   isAuthenticated,
@@ -81,7 +81,7 @@ export default courseRoutes;
 // );
 
 // courseRoutes.get("/", getAllCoursesController);
-// courseRoutes.get("/:slug", getCourseByIdController);
+courseRoutes.get("/:slug", controller.getCourseByIdController);
 // courseRoutes.delete("/:id", isAuthenticated, deleteCourseController);
 
 // export default courseRoutes;

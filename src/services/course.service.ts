@@ -137,11 +137,21 @@ export const createCourse = (data: any, instructorId: string) => {
   });
 };
 
-export const getCourse = (id: string) => {
-  return prisma.course.findUnique({
-    where: { id },
-    include: { sections: true },
+export const getCourse = async (slug: string) => {
+  const course = await prisma.course.findUnique({
+    where: { slug },
+    include: {
+      instructor: {
+        include: {
+          user: { select: { id: true, name: true, email: true } },
+        },
+      },
+      category: true,
+      _count: { select: { reviews: true, enrollments: true, sections: true } },
+    },
   });
+
+  return course;
 };
 
 export const updateCourse = (id: string, data: any) => {
