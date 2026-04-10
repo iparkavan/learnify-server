@@ -20,6 +20,8 @@ import sectionRoutes from "./routes/section.route";
 import lectureRoutes from "./routes/lecture.route";
 import { config } from "./config/app.config";
 
+console.log("🔥 NEW CODE RUNNING 🔥");
+
 const app = express();
 
 const allowedOrigins = [config.LOCAL_FRONTEND_ORIGIN, config.FRONTEND_ORIGIN];

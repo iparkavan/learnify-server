@@ -1,10 +1,16 @@
 import { Router } from "express";
-import * as controller from "../controllers/course.controller";
 import { isAuthenticated } from "../middlewares/isAuthenticated.middleware";
 import { requirePermission } from "../middlewares/requirePermission.middleware";
 import { validateSchema } from "../utils/validateSchema";
 import { CourseSchema } from "../validations/course.validation";
 import { PermissionType } from "../generated/prisma/enums";
+import {
+  createCourseController,
+  getAllCoursesController,
+  getCourseController,
+  getInstructorOnlyCoursesController,
+  saveCourseController,
+} from "../controllers/course.controller";
 
 const courseRoutes = Router();
 
@@ -13,77 +19,46 @@ courseRoutes.post(
   isAuthenticated,
   requirePermission(PermissionType.CREATE_COURSE),
   validateSchema(CourseSchema),
-  controller.saveCourseController,
+  saveCourseController,
 );
 
 courseRoutes.get(
   "/",
   // isAuthenticated,
   // controller.createCourse,
-  controller.getAllCoursesController,
+  getAllCoursesController,
 );
 
 courseRoutes.post(
   "/create-course",
   isAuthenticated,
   requirePermission(PermissionType.CREATE_COURSE),
-  controller.createCourse,
-);
-courseRoutes.get("/:slug", controller.getCourse);
-courseRoutes.put(
-  "/:id",
-  isAuthenticated,
-  requirePermission(PermissionType.UPDATE_COURSE),
-  controller.updateCourse,
-);
-courseRoutes.patch(
-  "/:id/publish",
-  isAuthenticated,
-  requirePermission(PermissionType.UPDATE_COURSE),
-  controller.publishCourse,
-);
-courseRoutes.delete(
-  "/:id",
-  isAuthenticated,
-  requirePermission(PermissionType.DELETE_COURSE),
-  controller.deleteCourse,
+  createCourseController,
 );
 
-export default courseRoutes;
+courseRoutes.get("/get-instructor-courses", getInstructorOnlyCoursesController);
 
-// import { Router } from "express";
-// import {
-//   createCourseController,
-//   getAllCoursesController,
-//   getCourseByIdController,
-//   deleteCourseController,
-//   updateCourseController,
-// } from "../controllers/course.controller";
-// import { isAuthenticated } from "../middlewares/isAuthenticated.middleware";
-// import { requirePermission } from "../middlewares/requirePermission.middleware";
-// import { PermissionType } from "@prisma/client";
-
-// const courseRoutes = Router();
-
-// courseRoutes.post(
-//   "/create",
-//   isAuthenticated,
-//   requirePermission(PermissionType.CREATE_COURSE),
-//   createCourseController
-// );
+courseRoutes.get("/:slug", getCourseController);
 
 // courseRoutes.put(
 //   "/:id",
 //   isAuthenticated,
-//   //   validateSchema(updateCourseSchema),
 //   requirePermission(PermissionType.UPDATE_COURSE),
-//   updateCourseController
+//   controller.updateCourse,
+// );
+// courseRoutes.patch(
+//   "/:id/publish",
+//   isAuthenticated,
+//   requirePermission(PermissionType.UPDATE_COURSE),
+//   controller.publishCourse,
+// );
+// courseRoutes.delete(
+//   "/:id",
+//   isAuthenticated,
+//   requirePermission(PermissionType.DELETE_COURSE),
+//   controller.deleteCourse,
 // );
 
-// courseRoutes.get("/", getAllCoursesController);
-courseRoutes.get("/:slug", controller.getCourseByIdController);
-// courseRoutes.delete("/:id", isAuthenticated, deleteCourseController);
+// INSTRUCTOR COURSE ROUTES
 
-// export default courseRoutes;
-
-// src/modules/course/course.routes.ts
+export default courseRoutes;
