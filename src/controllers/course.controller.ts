@@ -17,10 +17,6 @@ export const saveCourseController = asyncHandler(async (req, res) => {
   const instructorId = req.user?.id; // from auth middleware
   const courseData = req.body.courseData;
 
-  console.log("instructorId", instructorId);
-  console.log("courseData", courseData);
-  // const courseImageUrl = req.body.courseImageUrl;
-  // const promoVideoUrl = req.body.promoVideoUrl;
   const data = req.body as FullCourseData;
 
   const courseId = await service.saveCompleteCourseService(data, instructorId!);
