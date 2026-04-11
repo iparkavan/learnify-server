@@ -13,10 +13,6 @@ import {
 
 const authRoutes = Router();
 
-// INSTRUCTOR ROUTES
-authRoutes.post("/instructor/signup", signupInstructorController);
-authRoutes.post("/instructor/login", loginInstructorController);
-
 // STUDENT ROUTES
 authRoutes.post("/login/send-otp", loginSendOtpController);
 authRoutes.post("/signup/send-otp", signupSendOtpController);
@@ -28,6 +24,10 @@ authRoutes.get(
     session: false,
   }),
 );
+
+// INSTRUCTOR ROUTES
+authRoutes.post("/instructor/signup", signupInstructorController);
+authRoutes.post("/instructor/login", loginInstructorController);
 
 authRoutes.get(
   "/google/callback",
