@@ -25,3 +25,16 @@ export const generateUploadSignature = (folder: string) => {
     cloudName: process.env.CLOUDINARY_CLOUD_NAME,
   };
 };
+
+export const deleteVideoFromCloudinary = async (publicId: string) => {
+  try {
+    const result = await cloudinary.uploader.destroy(publicId, {
+      resource_type: "video", // ⚠️ VERY IMPORTANT
+    });
+
+    return result;
+  } catch (error) {
+    console.error("Cloudinary delete error:", error);
+    throw error;
+  }
+};

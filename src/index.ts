@@ -79,7 +79,7 @@ app.use(`${config.BASE_PATH}/courses`, courseRoutes);
 
 app.use(`${config.BASE_PATH}/section`, sectionRoutes);
 
-app.use(`${config.BASE_PATH}/lecture`, lectureRoutes);
+app.use(`${config.BASE_PATH}/lectures`, lectureRoutes);
 
 app.use(`${config.BASE_PATH}/payment`, isAuthenticated, paymentRoutes);
 
