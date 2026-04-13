@@ -108,23 +108,38 @@ export const saveCompleteCourseService = async (
   });
 };
 
-export const createCourse = (data: any, instructorId: string) => {
-  return prisma.course.create({
+export const createCourseService = async (
+  title: string,
+  instructorId: string,
+) => {
+  const instructorProfile = await prisma.instructorProfile.findUnique({
+    where: { userId: instructorId },
+  });
+
+  if (!instructorProfile) {
+    throw new Error("Instructor profile not found");
+  }
+
+  const course = await prisma.course.create({
     data: {
-      title: data.title,
-      description: data.description,
-      price: Number(data.price),
-      level: data.level,
-      categoryId: data.categoryId,
-      instructorId,
-      slug: slugify(data.title),
-      published: false, // draft
-      status: "draft",
+      title: title || "Untitled Course",
+      slug: `course-${Date.now()}`,
+      description: "",
+      price: 0,
+      level: "BEGINNER",
+      categoryId: "cmmr9w71j0000vouif9rejt28", // handle properly
+      instructorId: instructorProfile?.id,
+      status: "DRAFT",
+      published: false,
     },
   });
+
+  return {
+    course,
+  };
 };
 
-export const getCourse = async (slug: string) => {
+export const getCourseService = async (slug: string) => {
   const course = await prisma.course.findUnique({
     where: { slug },
     include: {
@@ -192,7 +207,7 @@ export const validateBeforePublish = async (courseId: string) => {
 
 // INSTRUCTOR COURSE SERVICE
 
-export const getInstructorOnlyCourses = async (instructorId: string) => {
+export const getInstructorOnlyCoursesService = async (instructorId: string) => {
   const courses = await prisma.course.findMany({
     where: {
       instructorId,

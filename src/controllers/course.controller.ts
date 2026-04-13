@@ -1,15 +1,22 @@
 // src/modules/course/course.controller.ts
 import { Request, Response } from "express";
-import * as service from "../services/course.service";
+// import * as service from "../services/course.service";
 import { asyncHandler } from "../middlewares/asyncHandler.middleware";
 import { HTTPSTATUS } from "../config/http.config";
 import { FullCourseData } from "../validations/course.validation";
+import {
+  createCourseService,
+  getAllCoursesService,
+  getCourseService,
+  getInstructorOnlyCoursesService,
+  saveCompleteCourseService,
+} from "../services/course.service";
 
 // 📚 Get All Courses
 export const getAllCoursesController = asyncHandler(async (req, res) => {
   // const query = req.params
 
-  const courses = await service.getAllCoursesService();
+  const courses = await getAllCoursesService();
   res.status(HTTPSTATUS.OK).json(courses);
 });
 
@@ -19,16 +26,22 @@ export const saveCourseController = asyncHandler(async (req, res) => {
 
   const data = req.body as FullCourseData;
 
-  const courseId = await service.saveCompleteCourseService(data, instructorId!);
+  const courseId = await saveCompleteCourseService(data, instructorId!);
 
   res.status(HTTPSTATUS.CREATED).json({ success: true, courseId });
 });
 
-export const createCourseController = async (req: Request, res: Response) => {
-  const instructorId = req.user?.id;
-  const course = await service.createCourse(req.body, instructorId!);
-  res.json(course);
-};
+export const createCourseController = asyncHandler(
+  async (req: Request, res: Response) => {
+    const { title } = req.body;
+    const instructorId = req.user?.id;
+    const { course } = await createCourseService(title, instructorId!);
+
+    res
+      .status(HTTPSTATUS.CREATED)
+      .json({ message: "Course created successfully", course });
+  },
+);
 
 export const getCourseController = async (req: Request, res: Response) => {
   const { slug } = req.params;
@@ -37,7 +50,7 @@ export const getCourseController = async (req: Request, res: Response) => {
 
   const slugValue = Array.isArray(slug) ? slug[0] : slug;
 
-  const course = await service.getCourse(slugValue);
+  const course = await getCourseService(slugValue);
   res.json(course);
 };
 
@@ -60,7 +73,7 @@ export const getInstructorOnlyCoursesController = asyncHandler(
   async (req, res, next) => {
     const instructorId = req.user?.id;
 
-    const instructorCourse = await service.getInstructorOnlyCourses(
+    const instructorCourse = await getInstructorOnlyCoursesService(
       instructorId!,
     );
 
