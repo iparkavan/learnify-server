@@ -29,6 +29,12 @@ const baseCourseSchema = z.object({
     .optional(),
   price: z.number().min(0, "Price must be a positive number"),
   published: z.boolean().optional(),
+  promoVideo: z
+    .string()
+    .url()
+    .optional()
+    .or(z.literal(""))
+    .transform((v) => (v === "" ? undefined : v)),
 });
 
 // ✅ Create course (all required except optional ones)

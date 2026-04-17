@@ -10,6 +10,7 @@ import {
   getCourseController,
   getInstructorOnlyCoursesController,
   saveCourseController,
+  updateCourseController,
 } from "../controllers/course.controller";
 
 const courseRoutes = Router();
@@ -34,6 +35,13 @@ courseRoutes.post(
   isAuthenticated,
   requirePermission(PermissionType.CREATE_COURSE),
   createCourseController,
+);
+
+courseRoutes.put(
+  `/update-course/:courseId`,
+  isAuthenticated,
+  requirePermission(PermissionType.UPDATE_COURSE),
+  updateCourseController,
 );
 
 courseRoutes.get("/get-instructor-courses", getInstructorOnlyCoursesController);

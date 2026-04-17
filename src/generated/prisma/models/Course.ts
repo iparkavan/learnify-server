@@ -43,6 +43,7 @@ export type CourseSumAggregateOutputType = {
 export type CourseMinAggregateOutputType = {
   id: string | null
   title: string | null
+  subtitle: string | null
   slug: string | null
   description: string | null
   thumbnail: string | null
@@ -67,6 +68,7 @@ export type CourseMinAggregateOutputType = {
 export type CourseMaxAggregateOutputType = {
   id: string | null
   title: string | null
+  subtitle: string | null
   slug: string | null
   description: string | null
   thumbnail: string | null
@@ -91,6 +93,7 @@ export type CourseMaxAggregateOutputType = {
 export type CourseCountAggregateOutputType = {
   id: number
   title: number
+  subtitle: number
   slug: number
   description: number
   thumbnail: number
@@ -132,6 +135,7 @@ export type CourseSumAggregateInputType = {
 export type CourseMinAggregateInputType = {
   id?: true
   title?: true
+  subtitle?: true
   slug?: true
   description?: true
   thumbnail?: true
@@ -156,6 +160,7 @@ export type CourseMinAggregateInputType = {
 export type CourseMaxAggregateInputType = {
   id?: true
   title?: true
+  subtitle?: true
   slug?: true
   description?: true
   thumbnail?: true
@@ -180,6 +185,7 @@ export type CourseMaxAggregateInputType = {
 export type CourseCountAggregateInputType = {
   id?: true
   title?: true
+  subtitle?: true
   slug?: true
   description?: true
   thumbnail?: true
@@ -292,6 +298,7 @@ export type CourseGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 export type CourseGroupByOutputType = {
   id: string
   title: string
+  subtitle: string | null
   slug: string
   description: string
   thumbnail: string | null
@@ -340,6 +347,7 @@ export type CourseWhereInput = {
   NOT?: Prisma.CourseWhereInput | Prisma.CourseWhereInput[]
   id?: Prisma.StringFilter<"Course"> | string
   title?: Prisma.StringFilter<"Course"> | string
+  subtitle?: Prisma.StringNullableFilter<"Course"> | string | null
   slug?: Prisma.StringFilter<"Course"> | string
   description?: Prisma.StringFilter<"Course"> | string
   thumbnail?: Prisma.StringNullableFilter<"Course"> | string | null
@@ -372,6 +380,7 @@ export type CourseWhereInput = {
 export type CourseOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  subtitle?: Prisma.SortOrderInput | Prisma.SortOrder
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrder
   thumbnail?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -408,6 +417,7 @@ export type CourseWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.CourseWhereInput[]
   NOT?: Prisma.CourseWhereInput | Prisma.CourseWhereInput[]
   title?: Prisma.StringFilter<"Course"> | string
+  subtitle?: Prisma.StringNullableFilter<"Course"> | string | null
   description?: Prisma.StringFilter<"Course"> | string
   thumbnail?: Prisma.StringNullableFilter<"Course"> | string | null
   price?: Prisma.FloatFilter<"Course"> | number
@@ -439,6 +449,7 @@ export type CourseWhereUniqueInput = Prisma.AtLeast<{
 export type CourseOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  subtitle?: Prisma.SortOrderInput | Prisma.SortOrder
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrder
   thumbnail?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -472,6 +483,7 @@ export type CourseScalarWhereWithAggregatesInput = {
   NOT?: Prisma.CourseScalarWhereWithAggregatesInput | Prisma.CourseScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Course"> | string
   title?: Prisma.StringWithAggregatesFilter<"Course"> | string
+  subtitle?: Prisma.StringNullableWithAggregatesFilter<"Course"> | string | null
   slug?: Prisma.StringWithAggregatesFilter<"Course"> | string
   description?: Prisma.StringWithAggregatesFilter<"Course"> | string
   thumbnail?: Prisma.StringNullableWithAggregatesFilter<"Course"> | string | null
@@ -497,6 +509,7 @@ export type CourseScalarWhereWithAggregatesInput = {
 export type CourseCreateInput = {
   id?: string
   title: string
+  subtitle?: string | null
   slug: string
   description: string
   thumbnail?: string | null
@@ -527,6 +540,7 @@ export type CourseCreateInput = {
 export type CourseUncheckedCreateInput = {
   id?: string
   title: string
+  subtitle?: string | null
   slug: string
   description: string
   thumbnail?: string | null
@@ -557,6 +571,7 @@ export type CourseUncheckedCreateInput = {
 export type CourseUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  subtitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -587,6 +602,7 @@ export type CourseUpdateInput = {
 export type CourseUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  subtitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -617,6 +633,7 @@ export type CourseUncheckedUpdateInput = {
 export type CourseCreateManyInput = {
   id?: string
   title: string
+  subtitle?: string | null
   slug: string
   description: string
   thumbnail?: string | null
@@ -642,6 +659,7 @@ export type CourseCreateManyInput = {
 export type CourseUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  subtitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -665,6 +683,7 @@ export type CourseUpdateManyMutationInput = {
 export type CourseUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  subtitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -700,6 +719,7 @@ export type CourseOrderByRelationAggregateInput = {
 export type CourseCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  subtitle?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrder
   thumbnail?: Prisma.SortOrder
@@ -732,6 +752,7 @@ export type CourseAvgOrderByAggregateInput = {
 export type CourseMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  subtitle?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrder
   thumbnail?: Prisma.SortOrder
@@ -756,6 +777,7 @@ export type CourseMaxOrderByAggregateInput = {
 export type CourseMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  subtitle?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrder
   thumbnail?: Prisma.SortOrder
@@ -958,6 +980,7 @@ export type CourseUpdateOneRequiredWithoutOrdersNestedInput = {
 export type CourseCreateWithoutInstructorInput = {
   id?: string
   title: string
+  subtitle?: string | null
   slug: string
   description: string
   thumbnail?: string | null
@@ -987,6 +1010,7 @@ export type CourseCreateWithoutInstructorInput = {
 export type CourseUncheckedCreateWithoutInstructorInput = {
   id?: string
   title: string
+  subtitle?: string | null
   slug: string
   description: string
   thumbnail?: string | null
@@ -1045,6 +1069,7 @@ export type CourseScalarWhereInput = {
   NOT?: Prisma.CourseScalarWhereInput | Prisma.CourseScalarWhereInput[]
   id?: Prisma.StringFilter<"Course"> | string
   title?: Prisma.StringFilter<"Course"> | string
+  subtitle?: Prisma.StringNullableFilter<"Course"> | string | null
   slug?: Prisma.StringFilter<"Course"> | string
   description?: Prisma.StringFilter<"Course"> | string
   thumbnail?: Prisma.StringNullableFilter<"Course"> | string | null
@@ -1070,6 +1095,7 @@ export type CourseScalarWhereInput = {
 export type CourseCreateWithoutSectionsInput = {
   id?: string
   title: string
+  subtitle?: string | null
   slug: string
   description: string
   thumbnail?: string | null
@@ -1099,6 +1125,7 @@ export type CourseCreateWithoutSectionsInput = {
 export type CourseUncheckedCreateWithoutSectionsInput = {
   id?: string
   title: string
+  subtitle?: string | null
   slug: string
   description: string
   thumbnail?: string | null
@@ -1144,6 +1171,7 @@ export type CourseUpdateToOneWithWhereWithoutSectionsInput = {
 export type CourseUpdateWithoutSectionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  subtitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1173,6 +1201,7 @@ export type CourseUpdateWithoutSectionsInput = {
 export type CourseUncheckedUpdateWithoutSectionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  subtitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1202,6 +1231,7 @@ export type CourseUncheckedUpdateWithoutSectionsInput = {
 export type CourseCreateWithoutEnrollmentsInput = {
   id?: string
   title: string
+  subtitle?: string | null
   slug: string
   description: string
   thumbnail?: string | null
@@ -1231,6 +1261,7 @@ export type CourseCreateWithoutEnrollmentsInput = {
 export type CourseUncheckedCreateWithoutEnrollmentsInput = {
   id?: string
   title: string
+  subtitle?: string | null
   slug: string
   description: string
   thumbnail?: string | null
@@ -1276,6 +1307,7 @@ export type CourseUpdateToOneWithWhereWithoutEnrollmentsInput = {
 export type CourseUpdateWithoutEnrollmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  subtitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1305,6 +1337,7 @@ export type CourseUpdateWithoutEnrollmentsInput = {
 export type CourseUncheckedUpdateWithoutEnrollmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  subtitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1334,6 +1367,7 @@ export type CourseUncheckedUpdateWithoutEnrollmentsInput = {
 export type CourseCreateWithoutReviewsInput = {
   id?: string
   title: string
+  subtitle?: string | null
   slug: string
   description: string
   thumbnail?: string | null
@@ -1363,6 +1397,7 @@ export type CourseCreateWithoutReviewsInput = {
 export type CourseUncheckedCreateWithoutReviewsInput = {
   id?: string
   title: string
+  subtitle?: string | null
   slug: string
   description: string
   thumbnail?: string | null
@@ -1408,6 +1443,7 @@ export type CourseUpdateToOneWithWhereWithoutReviewsInput = {
 export type CourseUpdateWithoutReviewsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  subtitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1437,6 +1473,7 @@ export type CourseUpdateWithoutReviewsInput = {
 export type CourseUncheckedUpdateWithoutReviewsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  subtitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1466,6 +1503,7 @@ export type CourseUncheckedUpdateWithoutReviewsInput = {
 export type CourseCreateWithoutCategoryInput = {
   id?: string
   title: string
+  subtitle?: string | null
   slug: string
   description: string
   thumbnail?: string | null
@@ -1495,6 +1533,7 @@ export type CourseCreateWithoutCategoryInput = {
 export type CourseUncheckedCreateWithoutCategoryInput = {
   id?: string
   title: string
+  subtitle?: string | null
   slug: string
   description: string
   thumbnail?: string | null
@@ -1550,6 +1589,7 @@ export type CourseUpdateManyWithWhereWithoutCategoryInput = {
 export type CourseCreateWithoutPaymentsInput = {
   id?: string
   title: string
+  subtitle?: string | null
   slug: string
   description: string
   thumbnail?: string | null
@@ -1579,6 +1619,7 @@ export type CourseCreateWithoutPaymentsInput = {
 export type CourseUncheckedCreateWithoutPaymentsInput = {
   id?: string
   title: string
+  subtitle?: string | null
   slug: string
   description: string
   thumbnail?: string | null
@@ -1624,6 +1665,7 @@ export type CourseUpdateToOneWithWhereWithoutPaymentsInput = {
 export type CourseUpdateWithoutPaymentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  subtitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1653,6 +1695,7 @@ export type CourseUpdateWithoutPaymentsInput = {
 export type CourseUncheckedUpdateWithoutPaymentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  subtitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1682,6 +1725,7 @@ export type CourseUncheckedUpdateWithoutPaymentsInput = {
 export type CourseCreateWithoutOrdersInput = {
   id?: string
   title: string
+  subtitle?: string | null
   slug: string
   description: string
   thumbnail?: string | null
@@ -1711,6 +1755,7 @@ export type CourseCreateWithoutOrdersInput = {
 export type CourseUncheckedCreateWithoutOrdersInput = {
   id?: string
   title: string
+  subtitle?: string | null
   slug: string
   description: string
   thumbnail?: string | null
@@ -1756,6 +1801,7 @@ export type CourseUpdateToOneWithWhereWithoutOrdersInput = {
 export type CourseUpdateWithoutOrdersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  subtitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1785,6 +1831,7 @@ export type CourseUpdateWithoutOrdersInput = {
 export type CourseUncheckedUpdateWithoutOrdersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  subtitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1814,6 +1861,7 @@ export type CourseUncheckedUpdateWithoutOrdersInput = {
 export type CourseCreateManyInstructorInput = {
   id?: string
   title: string
+  subtitle?: string | null
   slug: string
   description: string
   thumbnail?: string | null
@@ -1838,6 +1886,7 @@ export type CourseCreateManyInstructorInput = {
 export type CourseUpdateWithoutInstructorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  subtitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1867,6 +1916,7 @@ export type CourseUpdateWithoutInstructorInput = {
 export type CourseUncheckedUpdateWithoutInstructorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  subtitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1896,6 +1946,7 @@ export type CourseUncheckedUpdateWithoutInstructorInput = {
 export type CourseUncheckedUpdateManyWithoutInstructorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  subtitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1920,6 +1971,7 @@ export type CourseUncheckedUpdateManyWithoutInstructorInput = {
 export type CourseCreateManyCategoryInput = {
   id?: string
   title: string
+  subtitle?: string | null
   slug: string
   description: string
   thumbnail?: string | null
@@ -1944,6 +1996,7 @@ export type CourseCreateManyCategoryInput = {
 export type CourseUpdateWithoutCategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  subtitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1973,6 +2026,7 @@ export type CourseUpdateWithoutCategoryInput = {
 export type CourseUncheckedUpdateWithoutCategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  subtitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2002,6 +2056,7 @@ export type CourseUncheckedUpdateWithoutCategoryInput = {
 export type CourseUncheckedUpdateManyWithoutCategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  subtitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2093,6 +2148,7 @@ export type CourseCountOutputTypeCountSectionsArgs<ExtArgs extends runtime.Types
 export type CourseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
+  subtitle?: boolean
   slug?: boolean
   description?: boolean
   thumbnail?: boolean
@@ -2126,6 +2182,7 @@ export type CourseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 export type CourseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
+  subtitle?: boolean
   slug?: boolean
   description?: boolean
   thumbnail?: boolean
@@ -2153,6 +2210,7 @@ export type CourseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type CourseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
+  subtitle?: boolean
   slug?: boolean
   description?: boolean
   thumbnail?: boolean
@@ -2180,6 +2238,7 @@ export type CourseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type CourseSelectScalar = {
   id?: boolean
   title?: boolean
+  subtitle?: boolean
   slug?: boolean
   description?: boolean
   thumbnail?: boolean
@@ -2202,7 +2261,7 @@ export type CourseSelectScalar = {
   promoVideo?: boolean
 }
 
-export type CourseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "slug" | "description" | "thumbnail" | "price" | "level" | "categoryId" | "instructorId" | "createdAt" | "updatedAt" | "published" | "totalDuration" | "totalLectures" | "seoTitle" | "seoDescription" | "seoKeywords" | "metaImage" | "metaSchema" | "originalPrice" | "status" | "promoVideo", ExtArgs["result"]["course"]>
+export type CourseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "subtitle" | "slug" | "description" | "thumbnail" | "price" | "level" | "categoryId" | "instructorId" | "createdAt" | "updatedAt" | "published" | "totalDuration" | "totalLectures" | "seoTitle" | "seoDescription" | "seoKeywords" | "metaImage" | "metaSchema" | "originalPrice" | "status" | "promoVideo", ExtArgs["result"]["course"]>
 export type CourseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   instructor?: boolean | Prisma.InstructorProfileDefaultArgs<ExtArgs>
@@ -2236,6 +2295,7 @@ export type $CoursePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     title: string
+    subtitle: string | null
     slug: string
     description: string
     thumbnail: string | null
@@ -2688,6 +2748,7 @@ export interface Prisma__CourseClient<T, Null = never, ExtArgs extends runtime.T
 export interface CourseFieldRefs {
   readonly id: Prisma.FieldRef<"Course", 'String'>
   readonly title: Prisma.FieldRef<"Course", 'String'>
+  readonly subtitle: Prisma.FieldRef<"Course", 'String'>
   readonly slug: Prisma.FieldRef<"Course", 'String'>
   readonly description: Prisma.FieldRef<"Course", 'String'>
   readonly thumbnail: Prisma.FieldRef<"Course", 'String'>

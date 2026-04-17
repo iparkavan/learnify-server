@@ -1,10 +1,14 @@
 // import { prisma } from "../config/prisma.config";
 import slugify from "slugify";
 import { asyncHandler } from "../middlewares/asyncHandler.middleware";
-import { FullCourseData } from "../validations/course.validation";
-import { NotFoundException } from "../utils/app-error";
+import {
+  FullCourseData,
+  UpdateCourseType,
+} from "../validations/course.validation";
+import { NotFoundException, UnauthorizedException } from "../utils/app-error";
 import { prisma } from "../lib/schema";
 import { CourseLevel, LectureType } from "../generated/prisma/enums";
+import { date } from "zod";
 
 export const getAllCoursesService = async () => {
   return prisma.course.findMany({
@@ -108,37 +112,6 @@ export const saveCompleteCourseService = async (
   });
 };
 
-export const createCourseService = async (
-  title: string,
-  instructorId: string,
-) => {
-  const instructorProfile = await prisma.instructorProfile.findUnique({
-    where: { userId: instructorId },
-  });
-
-  if (!instructorProfile) {
-    throw new Error("Instructor profile not found");
-  }
-
-  const course = await prisma.course.create({
-    data: {
-      title: title || "Untitled Course",
-      slug: `course-${Date.now()}`,
-      description: "",
-      price: 0,
-      level: "BEGINNER",
-      categoryId: "cmmr9w71j0000vouif9rejt28", // handle properly
-      instructorId: instructorProfile?.id,
-      status: "DRAFT",
-      published: false,
-    },
-  });
-
-  return {
-    course,
-  };
-};
-
 export const getCourseService = async (slug: string) => {
   const course = await prisma.course.findUnique({
     where: { slug },
@@ -166,13 +139,6 @@ export const getCourseService = async (slug: string) => {
 
   return course;
 };
-
-// export const updateCourse = (id: string, data: any) => {
-//   return prisma.course.update({
-//     where: { id },
-//     data,
-//   });
-// };
 
 // export const publishCourse = (id: string) => {
 //   return prisma.course.update({
@@ -206,7 +172,6 @@ export const validateBeforePublish = async (courseId: string) => {
 };
 
 // INSTRUCTOR COURSE SERVICE
-
 export const getInstructorOnlyCoursesService = async (instructorId: string) => {
   const courses = await prisma.course.findMany({
     where: {
@@ -215,4 +180,102 @@ export const getInstructorOnlyCoursesService = async (instructorId: string) => {
   });
 
   return courses;
+};
+
+export const createCourseService = async (title: string, userId: string) => {
+  const instructorProfile = await prisma.instructorProfile.findUnique({
+    where: { userId: userId },
+  });
+
+  if (!instructorProfile) {
+    throw new Error("Instructor profile not found");
+  }
+
+  const course = await prisma.course.create({
+    data: {
+      title: title || "Untitled Course",
+      slug: `course-${Date.now()}`,
+      description: "",
+      price: 0,
+      level: "BEGINNER",
+      categoryId: "cmmr9w71j0000vouif9rejt28", // handle properly
+      instructorId: instructorProfile?.id,
+      status: "DRAFT",
+      published: false,
+    },
+  });
+
+  return {
+    course,
+  };
+};
+
+export const updateCourseService = async (
+  courseId: string,
+  userId: string,
+  data: UpdateCourseType,
+) => {
+  const instructorProfile = await prisma.instructorProfile.findUnique({
+    where: { userId: userId },
+  });
+
+  console.log("Instructor Profile:", instructorProfile);
+
+  const existingCourse = await prisma.course.findUnique({
+    where: { id: courseId },
+  });
+
+  console.log("Existing Course:", existingCourse);
+
+  if (!existingCourse) throw new NotFoundException("Course not found");
+
+  console.log(
+    "Existing Course:",
+    existingCourse.instructorId,
+    "Instructor ID:",
+    instructorProfile?.id,
+  );
+
+  if (existingCourse.instructorId !== instructorProfile?.id) {
+    throw new UnauthorizedException("Unauthorized");
+  }
+
+  if (!data.title) {
+    throw new Error("Course title is required");
+  }
+
+  let categoryId: string | undefined;
+
+  if (data.category) {
+    const category = await prisma.category.findUnique({
+      where: { id: data.category },
+    });
+
+    if (!category) {
+      throw new Error("Invalid category ID");
+    }
+
+    categoryId = category.id;
+  }
+
+  let baseSlug = slugify(data.title, { lower: true });
+
+  let slug = baseSlug;
+
+  const course = await prisma.course.update({
+    where: { id: courseId },
+    data: {
+      title: data.title,
+      description: data.description,
+      instructorId: instructorProfile.id,
+      slug,
+      price: Number(data.price),
+      ...(data.level && { level: data.level }),
+      categoryId: categoryId,
+      thumbnail: data.thumbnail,
+      promoVideo: data.promoVideo,
+      status: "DRAFT",
+    },
+  });
+  return { course };
 };

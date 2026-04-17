@@ -102,6 +102,7 @@ model InstructorProfile {
 model Course {
   id             String            @id @default(cuid())
   title          String
+  subtitle       String?
   slug           String            @unique
   description    String
   thumbnail      String?

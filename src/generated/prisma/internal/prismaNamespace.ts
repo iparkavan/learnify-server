@@ -2414,6 +2414,7 @@ export type InstructorProfileScalarFieldEnum = (typeof InstructorProfileScalarFi
 export const CourseScalarFieldEnum = {
   id: 'id',
   title: 'title',
+  subtitle: 'subtitle',
   slug: 'slug',
   description: 'description',
   thumbnail: 'thumbnail',
