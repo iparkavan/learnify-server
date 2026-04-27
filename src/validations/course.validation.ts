@@ -8,6 +8,10 @@ const baseCourseSchema = z.object({
     .string()
     .min(3, "Title must be at least 3 characters")
     .max(200, "Title must be at most 200 characters"),
+  subtitle: z
+    .string()
+    .min(3, "Subtitle must be at least 3 characters")
+    .max(200, "Subtitle must be at most 200 characters"),
   slug: z
     .string()
     .min(3, "Slug is required")

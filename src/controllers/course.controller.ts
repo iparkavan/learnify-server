@@ -3,17 +3,12 @@ import { Request, Response } from "express";
 // import * as service from "../services/course.service";
 import { asyncHandler } from "../middlewares/asyncHandler.middleware";
 import { HTTPSTATUS } from "../config/http.config";
+import { FullCourseData } from "../validations/course.validation";
 import {
-  FullCourseData,
-  UpdateCourseType,
-} from "../validations/course.validation";
-import {
-  createCourseService,
   getAllCoursesService,
   getCourseService,
   getInstructorOnlyCoursesService,
   saveCompleteCourseService,
-  updateCourseService,
 } from "../services/course.service";
 import { NotFoundException } from "../utils/app-error";
 
@@ -69,34 +64,3 @@ export const getInstructorOnlyCoursesController = asyncHandler(
     });
   },
 );
-
-// INSTRUCTOR CONTROLLERS
-export const createCourseController = asyncHandler(
-  async (req: Request, res: Response) => {
-    const { title } = req.body;
-    const userId = req.user?.id;
-    const { course } = await createCourseService(title, userId!);
-
-    res
-      .status(HTTPSTATUS.CREATED)
-      .json({ message: "Course created successfully", course });
-  },
-);
-
-export const updateCourseController = asyncHandler(async (req, res, next) => {
-  const { courseId } = req.params;
-  const userId = req.user?.id;
-  const body = req.body as UpdateCourseType;
-
-  const courseIdValue = Array.isArray(courseId) ? courseId[0] : courseId;
-
-  if (!courseIdValue) {
-    throw new NotFoundException("Course Id not found");
-  }
-
-  const { course } = await updateCourseService(courseIdValue, userId!, body);
-
-  return res
-    .status(HTTPSTATUS.OK)
-    .json({ message: "Course updated successfully", course });
-});

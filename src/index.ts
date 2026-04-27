@@ -19,6 +19,7 @@ import cloudinaryRoutes from "./routes/cloudinary-uploads.route";
 import sectionRoutes from "./routes/section.route";
 import lectureRoutes from "./routes/lecture.route";
 import { config } from "./config/app.config";
+import instructorCourseRoutes from "./routes/instructor-course.route";
 
 console.log("🔥 NEW CODE RUNNING 🔥");
 
@@ -76,6 +77,12 @@ app.use(
 app.use(`${config.BASE_PATH}/user`, isAuthenticated, userRoutes);
 
 app.use(`${config.BASE_PATH}/courses`, courseRoutes);
+
+app.use(
+  `${config.BASE_PATH}/instructor`,
+  isAuthenticated,
+  instructorCourseRoutes,
+);
 
 app.use(`${config.BASE_PATH}/section`, sectionRoutes);
 

@@ -5,12 +5,10 @@ import { validateSchema } from "../utils/validateSchema";
 import { CourseSchema } from "../validations/course.validation";
 import { PermissionType } from "../generated/prisma/enums";
 import {
-  createCourseController,
   getAllCoursesController,
   getCourseController,
   getInstructorOnlyCoursesController,
   saveCourseController,
-  updateCourseController,
 } from "../controllers/course.controller";
 
 const courseRoutes = Router();
@@ -30,23 +28,16 @@ courseRoutes.get(
   getAllCoursesController,
 );
 
-courseRoutes.post(
-  "/create-course",
-  isAuthenticated,
-  requirePermission(PermissionType.CREATE_COURSE),
-  createCourseController,
-);
-
-courseRoutes.put(
-  `/update-course/:courseId`,
-  isAuthenticated,
-  requirePermission(PermissionType.UPDATE_COURSE),
-  updateCourseController,
-);
-
 courseRoutes.get("/get-instructor-courses", getInstructorOnlyCoursesController);
 
 courseRoutes.get("/:slug", getCourseController);
+
+// courseRoutes.get(
+//   "/:courseId",
+//   isAuthenticated,
+//   requirePermission(PermissionType.UPDATE_COURSE),
+//   getCourseByIdController,
+// );
 
 // courseRoutes.put(
 //   "/:id",
