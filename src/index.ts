@@ -20,6 +20,7 @@ import sectionRoutes from "./routes/section.route";
 import lectureRoutes from "./routes/lecture.route";
 import { config } from "./config/app.config";
 import instructorCourseRoutes from "./routes/instructor-course.route";
+import instructorSectionRoutes from "./routes/instructor-section.route";
 
 console.log("🔥 NEW CODE RUNNING 🔥");
 
@@ -82,6 +83,12 @@ app.use(
   `${config.BASE_PATH}/instructor`,
   isAuthenticated,
   instructorCourseRoutes,
+);
+
+app.use(
+  `${config.BASE_PATH}/instructor`,
+  isAuthenticated,
+  instructorSectionRoutes,
 );
 
 app.use(`${config.BASE_PATH}/section`, sectionRoutes);
