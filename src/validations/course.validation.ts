@@ -23,6 +23,17 @@ const baseCourseSchema = z.object({
     .string()
     .min(10, "Description must be at least 10 characters")
     .max(5000, "Description is too long"),
+  learningObjectives: z.array(z.string()),
+  prerequisites: z.array(z.string()),
+  targetAudience: z.array(z.string()),
+  welcomeMessage: z
+    .string()
+    .min(10, "Welcome message must be at least 10 characters")
+    .max(5000, "Welcome message is too long"),
+  congratsMessage: z
+    .string()
+    .min(10, "Congratulation message must be at least 10 characters")
+    .max(5000, "Congratulation message is too long"),
   category: z.string().min(1, "Category is required").max(100).optional(),
   thumbnail: z.string().url("Thumbnail must be a valid URL").optional(),
   level: CourseLevelEnum.optional(),

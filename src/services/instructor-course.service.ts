@@ -40,7 +40,7 @@ export const updateCourseService = async (
     where: { userId: userId },
   });
 
-  console.log("Instructor Profile:", instructorProfile);
+  console.log("Instructor Profile:", data);
 
   const existingCourse = await prisma.course.findUnique({
     where: { id: courseId },
@@ -82,11 +82,20 @@ export const updateCourseService = async (
       subtitle: data.subtitle,
       instructorId: instructorProfile.id,
       slug,
+      welcomeMessage:
+        data.welcomeMessage ||
+        "Welcome to the course! We're excited to have you on board. Get ready to embark on a learning journey that will expand your knowledge and skills. Let's dive in and start learning together!",
+      congratsMessage:
+        data.congratsMessage ||
+        "Congratulations! You've completed the course. We hope you've gained valuable knowledge and skills.",
       price: Number(data.price),
       ...(data.level && { level: data.level }),
       categoryId: categoryId,
       thumbnail: data.thumbnail,
       promoVideo: data.promoVideo,
+      learningObjectives: data.learningObjectives,
+      prerequisites: data.prerequisites,
+      targetAudience: data.targetAudience,
       status: "DRAFT",
     },
   });

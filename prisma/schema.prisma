@@ -100,36 +100,41 @@ model InstructorProfile {
 }
 
 model Course {
-  id             String            @id @default(cuid())
-  title          String
-  subtitle       String?
-  slug           String            @unique
-  description    String
-  thumbnail      String?
-  price          Float
-  level          CourseLevel
-  categoryId     String
-  instructorId   String
-  createdAt      DateTime          @default(now())
-  updatedAt      DateTime          @updatedAt
-  published      Boolean           @default(false)
-  totalDuration  Int               @default(0)
-  totalLectures  Int               @default(0)
-  seoTitle       String?
-  seoDescription String?
-  seoKeywords    String?
-  metaImage      String?
-  metaSchema     Json?
-  originalPrice  Float             @default(500)
-  status         String
-  promoVideo     String?
-  category       Category          @relation(fields: [categoryId], references: [id])
-  instructor     InstructorProfile @relation(fields: [instructorId], references: [id])
-  enrollments    Enrollment[]
-  orders         Order[]
-  payments       Payment[]
-  reviews        Review[]
-  sections       Section[]
+  id                 String            @id @default(cuid())
+  title              String
+  subtitle           String?
+  slug               String            @unique
+  description        String
+  learningObjectives String[]          @default([])
+  prerequisites      String[]          @default([])
+  targetAudience     String[]          @default([])
+  welcomeMessage     String            @default("Welcome to the course! We're excited to have you on board. Get ready to embark on a learning journey that will expand your knowledge and skills. Let's dive in and start learning together!")
+  congratsMessage    String            @default("Congratulations! You've completed the course. We hope you've gained valuable knowledge and skills.")
+  thumbnail          String?
+  price              Float
+  level              CourseLevel
+  categoryId         String
+  instructorId       String
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  published          Boolean           @default(false)
+  totalDuration      Int               @default(0)
+  totalLectures      Int               @default(0)
+  seoTitle           String?
+  seoDescription     String?
+  seoKeywords        String?
+  metaImage          String?
+  metaSchema         Json?
+  originalPrice      Float             @default(500)
+  status             String
+  promoVideo         String?
+  category           Category          @relation(fields: [categoryId], references: [id])
+  instructor         InstructorProfile @relation(fields: [instructorId], references: [id])
+  enrollments        Enrollment[]
+  orders             Order[]
+  payments           Payment[]
+  reviews            Review[]
+  sections           Section[]
 }
 
 model Section {
@@ -138,7 +143,7 @@ model Section {
   order    Int
   courseId String
   lectures Lecture[]
-  course   Course    @relation(fields: [courseId], references: [id])
+  course   Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
 }
 
 model Lecture {
@@ -150,7 +155,7 @@ model Lecture {
   assignments      Assignment?
   codingExercises  CodingExercise?
   courseProgresses CourseProgress[]
-  section          Section          @relation(fields: [sectionId], references: [id])
+  section          Section          @relation(fields: [sectionId], references: [id], onDelete: Cascade)
   quiz             Quiz?
   resources        Resource[]
   video            Video?
@@ -169,7 +174,7 @@ model Video {
   lectureId    String      @unique
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
-  lecture      Lecture     @relation(fields: [lectureId], references: [id])
+  lecture      Lecture     @relation(fields: [lectureId], references: [id], onDelete: Cascade)
 }
 
 model Resource {
@@ -177,14 +182,14 @@ model Resource {
   title     String
   url       String
   lectureId String
-  lecture   Lecture @relation(fields: [lectureId], references: [id])
+  lecture   Lecture @relation(fields: [lectureId], references: [id], onDelete: Cascade)
 }
 
 model Quiz {
   id        String     @id @default(cuid())
   lectureId String?    @unique
   questions Question[]
-  lecture   Lecture?   @relation(fields: [lectureId], references: [id])
+  lecture   Lecture?   @relation(fields: [lectureId], references: [id], onDelete: Cascade)
 }
 
 model Question {
@@ -201,7 +206,7 @@ model Assignment {
   lectureId     String  @unique
   instructions  String
   estimatedTime Int
-  lecture       Lecture @relation(fields: [lectureId], references: [id])
+  lecture       Lecture @relation(fields: [lectureId], references: [id], onDelete: Cascade)
 }
 
 model CodingExercise {
@@ -211,7 +216,7 @@ model CodingExercise {
   starterCode  String
   solutionCode String
   testCases    Json
-  lecture      Lecture @relation(fields: [lectureId], references: [id])
+  lecture      Lecture @relation(fields: [lectureId], references: [id], onDelete: Cascade)
 }
 
 model Enrollment {
