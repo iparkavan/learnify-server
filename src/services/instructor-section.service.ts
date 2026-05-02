@@ -1,9 +1,6 @@
 import { prisma } from "../lib/schema";
 
-export const instructorCreateSectionService = async (
-  courseId: string,
-  title: string,
-) => {
+export const instructorCreateSectionService = async (courseId: string) => {
   const lastSection = await prisma.section.findFirst({
     where: {
       courseId,
@@ -17,7 +14,7 @@ export const instructorCreateSectionService = async (
 
   return await prisma.section.create({
     data: {
-      title,
+      title: `Untitled Section ${nextOrder}`,
       courseId,
       order: nextOrder,
     },
