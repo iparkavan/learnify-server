@@ -20,3 +20,11 @@ export const instructorCreateSectionService = async (courseId: string) => {
     },
   });
 };
+
+export const instructorDeleteSectionService = async (sectionId: string) => {
+  return await prisma.section.delete({
+    where: {
+      id: sectionId,
+    },
+  });
+};

@@ -1,13 +1,13 @@
 import { HTTPSTATUS } from "../config/http.config";
 import { asyncHandler } from "../middlewares/asyncHandler.middleware";
-import { instructorCreateSectionService } from "../services/instructor-section.service";
+import {
+  instructorCreateSectionService,
+  instructorDeleteSectionService,
+} from "../services/instructor-section.service";
 
 export const instructorCreateSectionController = asyncHandler(
   async (req, res, next) => {
     const { courseId } = req.params;
-    // const { title } = req.body
-
-    console.log("section routes", courseId);
 
     if (Array.isArray(courseId)) {
       throw new Error("Invalid courseId");
@@ -18,5 +18,21 @@ export const instructorCreateSectionController = asyncHandler(
     res
       .status(HTTPSTATUS.CREATED)
       .json({ message: "Section created successfully", section });
+  },
+);
+
+export const instructorDeleteSectionController = asyncHandler(
+  async (req, res, next) => {
+    const { sectionId } = req.params;
+
+    if (Array.isArray(sectionId)) {
+      throw new Error("Invalid sectionId");
+    }
+
+    const section = await instructorDeleteSectionService(sectionId);
+
+    res
+      .status(HTTPSTATUS.CREATED)
+      .json({ message: "Section deleted successfully", section });
   },
 );
