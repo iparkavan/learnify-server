@@ -1,3 +1,4 @@
+import { Section } from "../generated/prisma/browser";
 import { prisma } from "../lib/schema";
 
 export const instructorCreateSectionService = async (courseId: string) => {
@@ -26,5 +27,17 @@ export const instructorDeleteSectionService = async (sectionId: string) => {
     where: {
       id: sectionId,
     },
+  });
+};
+
+export const instructorUpdateSectionService = async (
+  sectionId: string,
+  sectionData: Partial<Section>,
+) => {
+  return await prisma.section.update({
+    where: {
+      id: sectionId,
+    },
+    data: sectionData,
   });
 };

@@ -3,6 +3,7 @@ import { asyncHandler } from "../middlewares/asyncHandler.middleware";
 import {
   instructorCreateSectionService,
   instructorDeleteSectionService,
+  instructorUpdateSectionService,
 } from "../services/instructor-section.service";
 
 export const instructorCreateSectionController = asyncHandler(
@@ -34,5 +35,25 @@ export const instructorDeleteSectionController = asyncHandler(
     res
       .status(HTTPSTATUS.CREATED)
       .json({ message: "Section deleted successfully", section });
+  },
+);
+
+export const instructorUpdateSectionController = asyncHandler(
+  async (req, res, next) => {
+    const { sectionId } = req.params;
+    const sectionData = req.body;
+
+    if (Array.isArray(sectionId)) {
+      throw new Error("Invalid sectionId");
+    }
+
+    const section = await instructorUpdateSectionService(
+      sectionId,
+      sectionData,
+    );
+
+    res
+      .status(HTTPSTATUS.CREATED)
+      .json({ message: "Section updated successfully", section });
   },
 );
