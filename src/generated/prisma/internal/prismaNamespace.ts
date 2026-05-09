@@ -2448,6 +2448,7 @@ export type CourseScalarFieldEnum = (typeof CourseScalarFieldEnum)[keyof typeof 
 export const SectionScalarFieldEnum = {
   id: 'id',
   title: 'title',
+  objective: 'objective',
   order: 'order',
   courseId: 'courseId'
 } as const

@@ -138,12 +138,13 @@ model Course {
 }
 
 model Section {
-  id       String    @id @default(cuid())
-  title    String
-  order    Int
-  courseId String
-  lectures Lecture[]
-  course   Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  id        String    @id @default(cuid())
+  title     String
+  objective String?
+  order     Int
+  courseId  String
+  lectures  Lecture[]
+  course    Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
 }
 
 model Lecture {
