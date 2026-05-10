@@ -40,8 +40,6 @@ export const updateCourseService = async (
     where: { userId: userId },
   });
 
-  console.log("Instructor Profile:", data);
-
   const existingCourse = await prisma.course.findUnique({
     where: { id: courseId },
   });
