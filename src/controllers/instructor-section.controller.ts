@@ -34,7 +34,7 @@ export const instructorDeleteSectionController = asyncHandler(
 
     res
       .status(HTTPSTATUS.CREATED)
-      .json({ message: "Section deleted successfully", section });
+      .json({ message: "Section deleted successfully" });
   },
 );
 

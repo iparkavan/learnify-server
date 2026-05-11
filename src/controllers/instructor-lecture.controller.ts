@@ -2,6 +2,7 @@ import { HTTPSTATUS } from "../config/http.config";
 import { asyncHandler } from "../middlewares/asyncHandler.middleware";
 import {
   instructorCreateLectureService,
+  instructorDeleteLectureService,
   instructorUpdateLectureService,
 } from "../services/instructor-lecture.service";
 
@@ -37,5 +38,21 @@ export const instructorUpdateLectureController = asyncHandler(
     res
       .status(HTTPSTATUS.OK)
       .json({ message: "Lecture updated successfully", lecture });
+  },
+);
+
+export const instructorDeleteLectureController = asyncHandler(
+  async (req, res, next) => {
+    const { lectureId } = req.params;
+
+    if (Array.isArray(lectureId)) {
+      throw new Error("Invalid lectureId");
+    }
+
+    const lecture = await instructorDeleteLectureService({ lectureId });
+
+    res
+      .status(HTTPSTATUS.CREATED)
+      .json({ message: "Lecture deleted successfully" });
   },
 );

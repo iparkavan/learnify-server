@@ -13,6 +13,7 @@ import {
 } from "../controllers/instructor-section.controller";
 import {
   instructorCreateLectureController,
+  instructorDeleteLectureController,
   instructorUpdateLectureController,
 } from "../controllers/instructor-lecture.controller";
 
@@ -44,16 +45,16 @@ instructorCourseRoutes.post(
   instructorCreateSectionController,
 );
 
-instructorCourseRoutes.delete(
-  `/sections/:sectionId`,
-  requirePermission(PermissionType.DELETE_COURSE),
-  instructorDeleteSectionController,
-);
-
 instructorCourseRoutes.patch(
   `/sections/:sectionId`,
   requirePermission(PermissionType.UPDATE_COURSE),
   instructorUpdateSectionController,
+);
+
+instructorCourseRoutes.delete(
+  `/sections/:sectionId`,
+  requirePermission(PermissionType.DELETE_COURSE),
+  instructorDeleteSectionController,
 );
 
 // INSTRUCTOR LECTURE ROUTES
@@ -67,6 +68,12 @@ instructorCourseRoutes.patch(
   `/lectures/:lectureId`,
   requirePermission(PermissionType.UPDATE_COURSE),
   instructorUpdateLectureController,
+);
+
+instructorCourseRoutes.delete(
+  `/lectures/:lectureId`,
+  requirePermission(PermissionType.DELETE_COURSE),
+  instructorDeleteLectureController,
 );
 
 export default instructorCourseRoutes;

@@ -82,3 +82,15 @@ export const instructorUpdateLectureService = async ({
     },
   });
 };
+
+export const instructorDeleteLectureService = async ({
+  lectureId,
+}: {
+  lectureId: string;
+}) => {
+  return await prisma.lecture.delete({
+    where: {
+      id: lectureId,
+    },
+  });
+};
