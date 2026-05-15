@@ -1,3 +1,4 @@
+import cloudinary from "../config/cloudinary.config";
 import { HTTPSTATUS } from "../config/http.config";
 import { asyncHandler } from "../middlewares/asyncHandler.middleware";
 import {
@@ -49,10 +50,46 @@ export const instructorDeleteLectureController = asyncHandler(
       throw new Error("Invalid lectureId");
     }
 
-    const lecture = await instructorDeleteLectureService({ lectureId });
+    await instructorDeleteLectureService({ lectureId });
 
     res
       .status(HTTPSTATUS.CREATED)
       .json({ message: "Lecture deleted successfully" });
+  },
+);
+
+export const deleteVideoFromCloudinaryController = asyncHandler(
+  async (req, res) => {
+    const { publicId } = req.body;
+
+    if (!publicId) {
+      return res.status(HTTPSTATUS.BAD_REQUEST).json({
+        success: false,
+        message: "publicId is required",
+      });
+    }
+
+    const result = await cloudinary.uploader.destroy(publicId, {
+      resource_type: "video",
+    });
+
+    console.log("Cloudinary delete result:", result);
+
+    // Cloudinary can return:
+    // "ok"
+    // "not found"
+
+    if (result.result !== "ok" && result.result !== "not found") {
+      return res.status(HTTPSTATUS.BAD_REQUEST).json({
+        success: false,
+        message: "Failed to delete video",
+        result,
+      });
+    }
+
+    return res.status(HTTPSTATUS.OK).json({
+      success: true,
+      message: "Video deleted successfully",
+    });
   },
 );

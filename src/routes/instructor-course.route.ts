@@ -3,6 +3,7 @@ import { requirePermission } from "../middlewares/requirePermission.middleware";
 import { PermissionType } from "../generated/prisma/enums";
 import {
   createCourseController,
+  deleteCloudinaryImageController,
   deleteCourseByIdController,
   getCourseByIdController,
   updateCourseController,
@@ -13,10 +14,12 @@ import {
   instructorUpdateSectionController,
 } from "../controllers/instructor-section.controller";
 import {
+  deleteVideoFromCloudinaryController,
   instructorCreateLectureController,
   instructorDeleteLectureController,
   instructorUpdateLectureController,
 } from "../controllers/instructor-lecture.controller";
+import { isAuthenticated } from "../middlewares/isAuthenticated.middleware";
 
 const instructorCourseRoutes = Router();
 
@@ -44,6 +47,11 @@ instructorCourseRoutes.delete(
   deleteCourseByIdController,
 );
 
+instructorCourseRoutes.delete(
+  `/cloudinary/thumbnail/delete-image`,
+  deleteCloudinaryImageController,
+);
+
 // INSTRUCTOR SECTION ROUTES
 
 instructorCourseRoutes.post(
@@ -65,6 +73,12 @@ instructorCourseRoutes.delete(
 );
 
 // INSTRUCTOR LECTURE ROUTES
+
+instructorCourseRoutes.delete(
+  "/lectures/delete-video",
+  deleteVideoFromCloudinaryController,
+);
+
 instructorCourseRoutes.post(
   `/lectures/:sectionId/create-lecture`,
   requirePermission(PermissionType.CREATE_COURSE),

@@ -17,9 +17,10 @@ import contactUsRoute from "./routes/contact-us.route";
 import profileSetupRoutes from "./routes/profile-setup.route";
 import cloudinaryRoutes from "./routes/cloudinary-uploads.route";
 import sectionRoutes from "./routes/section.route";
-import lectureRoutes from "./routes/lecture.route";
+// import lectureRoutes from "./routes/lecture.route";
 import { config } from "./config/app.config";
 import instructorCourseRoutes from "./routes/instructor-course.route";
+// import lectureRoutes from "./routes/lecture.route";
 
 console.log("🔥 NEW CODE RUNNING 🔥");
 
@@ -92,7 +93,7 @@ app.use(
 
 app.use(`${config.BASE_PATH}/section`, sectionRoutes);
 
-app.use(`${config.BASE_PATH}/lectures`, lectureRoutes);
+// app.use(`${config.BASE_PATH}/lectures`, lectureRoutes);
 
 app.use(`${config.BASE_PATH}/payment`, isAuthenticated, paymentRoutes);
 

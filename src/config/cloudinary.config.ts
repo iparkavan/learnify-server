@@ -28,28 +28,29 @@ export const generateUploadSignature = (folder: string) => {
   };
 };
 
-export const deleteImageFromCloudinary = async (publicId: string) => {
-  try {
-    return await cloudinary.uploader.destroy(publicId);
-  } catch (error) {
-    console.error("Cloudinary image delete error:", error);
+// export const deleteImageFromCloudinary = async (publicId: string) => {
+//   try {
+//     return await cloudinary.uploader.destroy(publicId);
+//   } catch (error) {
+//     console.error("Cloudinary image delete error:", error);
 
-    throw error;
-  }
-};
+//     throw error;
+//   }
+// };
 
-export const deleteVideoFromCloudinary = async (publicId: string) => {
-  try {
-    return await cloudinary.uploader.destroy(publicId, {
-      resource_type: "video",
-    });
-  } catch (error) {
-    console.error("Cloudinary video delete error:", error);
+// export const deleteVideoFromCloudinary = async (publicId: string) => {
+//   try {
+//     return await cloudinary.uploader.destroy(publicId, {
+//       resource_type: "video",
+//     });
+//   } catch (error) {
+//     console.error("Cloudinary video delete error:", error);
 
-    throw error;
-  }
-};
+//     throw error;
+//   }
+// };
 
+// ---------------------------------------------------------------
 // import { v2 as cloudinary } from "cloudinary";
 
 // cloudinary.config({

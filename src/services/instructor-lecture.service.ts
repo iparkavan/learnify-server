@@ -1,4 +1,3 @@
-import { Lecture } from "../generated/prisma/client";
 import { LectureType } from "../generated/prisma/enums";
 import { prisma } from "../lib/schema";
 
@@ -90,6 +89,7 @@ export const instructorDeleteLectureService = async ({
 }: {
   lectureId: string;
 }) => {
+  console.log("DELETE LECTURE SERVICE HIT");
   return await prisma.lecture.delete({
     where: {
       id: lectureId,

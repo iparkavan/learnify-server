@@ -1,3 +1,4 @@
+import cloudinary from "../config/cloudinary.config";
 import { HTTPSTATUS } from "../config/http.config";
 import { asyncHandler } from "../middlewares/asyncHandler.middleware";
 import {
@@ -69,5 +70,21 @@ export const deleteCourseByIdController = asyncHandler(
     return res
       .status(HTTPSTATUS.OK)
       .json({ success: true, message: "Course deleted successfully" });
+  },
+);
+
+export const deleteCloudinaryImageController = asyncHandler(
+  async (req, res) => {
+    const { publicId } = req.body;
+
+    if (!publicId) {
+      throw new Error("Public ID required");
+    }
+
+    await cloudinary.uploader.destroy(publicId);
+
+    res.status(200).json({
+      success: true,
+    });
   },
 );
