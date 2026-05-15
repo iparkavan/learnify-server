@@ -36,6 +36,7 @@ const baseCourseSchema = z.object({
     .max(5000, "Congratulation message is too long"),
   category: z.string().min(1, "Category is required").max(100).optional(),
   thumbnail: z.string().url("Thumbnail must be a valid URL").optional(),
+  thumbnailPublicId: z.string().url("Thumbnail must be a valid URL").optional(),
   level: CourseLevelEnum.optional(),
   totalDuration: z
     .number()
@@ -73,7 +74,7 @@ export const CourseSchema = z.object({
       price: z.coerce.number().min(0),
 
       thumbnail: z.string().url().optional(),
-
+      thumbnailPublicId: z.string().url().optional(),
       // FIX: accept promoVideo OR promo_video_url
       promoVideo: z
         .string()

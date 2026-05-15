@@ -91,6 +91,7 @@ export const updateCourseService = async (
       ...(data.level && { level: data.level }),
       categoryId: categoryId,
       thumbnail: data.thumbnail,
+      thumbnailPublicId: data.thumbnailPublicId,
       promoVideo: data.promoVideo,
       learningObjectives: data.learningObjectives,
       prerequisites: data.prerequisites,
