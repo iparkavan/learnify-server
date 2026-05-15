@@ -2,6 +2,7 @@ import { HTTPSTATUS } from "../config/http.config";
 import { asyncHandler } from "../middlewares/asyncHandler.middleware";
 import {
   createCourseService,
+  deleteCourseByIdService,
   getCourseByIdService,
   updateCourseService,
 } from "../services/instructor-course.service";
@@ -52,3 +53,21 @@ export const getCourseByIdController = asyncHandler(async (req, res, next) => {
     .status(HTTPSTATUS.OK)
     .json({ message: "Course fetched successfully", course });
 });
+
+export const deleteCourseByIdController = asyncHandler(
+  async (req, res, next) => {
+    const { courseId } = req.params;
+
+    const courseIdValue = Array.isArray(courseId) ? courseId[0] : courseId;
+
+    if (!courseIdValue) {
+      throw new NotFoundException("Course Id not found");
+    }
+
+    await deleteCourseByIdService(courseIdValue);
+
+    return res
+      .status(HTTPSTATUS.OK)
+      .json({ success: true, message: "Course deleted successfully" });
+  },
+);

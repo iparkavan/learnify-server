@@ -111,6 +111,9 @@ model Course {
   welcomeMessage     String            @default("Welcome to the course! We're excited to have you on board. Get ready to embark on a learning journey that will expand your knowledge and skills. Let's dive in and start learning together!")
   congratsMessage    String            @default("Congratulations! You've completed the course. We hope you've gained valuable knowledge and skills.")
   thumbnail          String?
+  thumbnailPublicId  String?
+  promoVideo         String?
+  promoVideoPublicId String?
   price              Float
   level              CourseLevel
   categoryId         String
@@ -127,7 +130,6 @@ model Course {
   metaSchema         Json?
   originalPrice      Float             @default(500)
   status             String
-  promoVideo         String?
   category           Category          @relation(fields: [categoryId], references: [id])
   instructor         InstructorProfile @relation(fields: [instructorId], references: [id])
   enrollments        Enrollment[]
@@ -163,19 +165,21 @@ model Lecture {
 }
 
 model Video {
-  id           String      @id @default(cuid())
-  title        String?
-  originalUrl  String
-  streamUrl    String?
-  thumbnailUrl String?
-  duration     Int?
-  size         Float?
-  format       String?
-  status       VideoStatus @default(PROCESSING)
-  lectureId    String      @unique
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
-  lecture      Lecture     @relation(fields: [lectureId], references: [id], onDelete: Cascade)
+  id                   String      @id @default(cuid())
+  title                String?
+  originalUrl          String
+  originalUrlPubicId   String?
+  streamUrl            String?
+  thumbnailUrl         String?
+  thumbnailUrlPublicId String?
+  duration             Int?
+  size                 Float?
+  format               String?
+  status               VideoStatus @default(PROCESSING)
+  lectureId            String      @unique
+  createdAt            DateTime    @default(now())
+  updatedAt            DateTime    @updatedAt
+  lecture              Lecture     @relation(fields: [lectureId], references: [id], onDelete: Cascade)
 }
 
 model Resource {

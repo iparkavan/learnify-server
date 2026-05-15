@@ -2423,6 +2423,9 @@ export const CourseScalarFieldEnum = {
   welcomeMessage: 'welcomeMessage',
   congratsMessage: 'congratsMessage',
   thumbnail: 'thumbnail',
+  thumbnailPublicId: 'thumbnailPublicId',
+  promoVideo: 'promoVideo',
+  promoVideoPublicId: 'promoVideoPublicId',
   price: 'price',
   level: 'level',
   categoryId: 'categoryId',
@@ -2438,8 +2441,7 @@ export const CourseScalarFieldEnum = {
   metaImage: 'metaImage',
   metaSchema: 'metaSchema',
   originalPrice: 'originalPrice',
-  status: 'status',
-  promoVideo: 'promoVideo'
+  status: 'status'
 } as const
 
 export type CourseScalarFieldEnum = (typeof CourseScalarFieldEnum)[keyof typeof CourseScalarFieldEnum]
@@ -2471,8 +2473,10 @@ export const VideoScalarFieldEnum = {
   id: 'id',
   title: 'title',
   originalUrl: 'originalUrl',
+  originalUrlPubicId: 'originalUrlPubicId',
   streamUrl: 'streamUrl',
   thumbnailUrl: 'thumbnailUrl',
+  thumbnailUrlPublicId: 'thumbnailUrlPublicId',
   duration: 'duration',
   size: 'size',
   format: 'format',

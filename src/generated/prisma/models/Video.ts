@@ -40,8 +40,10 @@ export type VideoMinAggregateOutputType = {
   id: string | null
   title: string | null
   originalUrl: string | null
+  originalUrlPubicId: string | null
   streamUrl: string | null
   thumbnailUrl: string | null
+  thumbnailUrlPublicId: string | null
   duration: number | null
   size: number | null
   format: string | null
@@ -55,8 +57,10 @@ export type VideoMaxAggregateOutputType = {
   id: string | null
   title: string | null
   originalUrl: string | null
+  originalUrlPubicId: string | null
   streamUrl: string | null
   thumbnailUrl: string | null
+  thumbnailUrlPublicId: string | null
   duration: number | null
   size: number | null
   format: string | null
@@ -70,8 +74,10 @@ export type VideoCountAggregateOutputType = {
   id: number
   title: number
   originalUrl: number
+  originalUrlPubicId: number
   streamUrl: number
   thumbnailUrl: number
+  thumbnailUrlPublicId: number
   duration: number
   size: number
   format: number
@@ -97,8 +103,10 @@ export type VideoMinAggregateInputType = {
   id?: true
   title?: true
   originalUrl?: true
+  originalUrlPubicId?: true
   streamUrl?: true
   thumbnailUrl?: true
+  thumbnailUrlPublicId?: true
   duration?: true
   size?: true
   format?: true
@@ -112,8 +120,10 @@ export type VideoMaxAggregateInputType = {
   id?: true
   title?: true
   originalUrl?: true
+  originalUrlPubicId?: true
   streamUrl?: true
   thumbnailUrl?: true
+  thumbnailUrlPublicId?: true
   duration?: true
   size?: true
   format?: true
@@ -127,8 +137,10 @@ export type VideoCountAggregateInputType = {
   id?: true
   title?: true
   originalUrl?: true
+  originalUrlPubicId?: true
   streamUrl?: true
   thumbnailUrl?: true
+  thumbnailUrlPublicId?: true
   duration?: true
   size?: true
   format?: true
@@ -229,8 +241,10 @@ export type VideoGroupByOutputType = {
   id: string
   title: string | null
   originalUrl: string
+  originalUrlPubicId: string | null
   streamUrl: string | null
   thumbnailUrl: string | null
+  thumbnailUrlPublicId: string | null
   duration: number | null
   size: number | null
   format: string | null
@@ -267,8 +281,10 @@ export type VideoWhereInput = {
   id?: Prisma.StringFilter<"Video"> | string
   title?: Prisma.StringNullableFilter<"Video"> | string | null
   originalUrl?: Prisma.StringFilter<"Video"> | string
+  originalUrlPubicId?: Prisma.StringNullableFilter<"Video"> | string | null
   streamUrl?: Prisma.StringNullableFilter<"Video"> | string | null
   thumbnailUrl?: Prisma.StringNullableFilter<"Video"> | string | null
+  thumbnailUrlPublicId?: Prisma.StringNullableFilter<"Video"> | string | null
   duration?: Prisma.IntNullableFilter<"Video"> | number | null
   size?: Prisma.FloatNullableFilter<"Video"> | number | null
   format?: Prisma.StringNullableFilter<"Video"> | string | null
@@ -283,8 +299,10 @@ export type VideoOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrderInput | Prisma.SortOrder
   originalUrl?: Prisma.SortOrder
+  originalUrlPubicId?: Prisma.SortOrderInput | Prisma.SortOrder
   streamUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   thumbnailUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  thumbnailUrlPublicId?: Prisma.SortOrderInput | Prisma.SortOrder
   duration?: Prisma.SortOrderInput | Prisma.SortOrder
   size?: Prisma.SortOrderInput | Prisma.SortOrder
   format?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -303,8 +321,10 @@ export type VideoWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.VideoWhereInput | Prisma.VideoWhereInput[]
   title?: Prisma.StringNullableFilter<"Video"> | string | null
   originalUrl?: Prisma.StringFilter<"Video"> | string
+  originalUrlPubicId?: Prisma.StringNullableFilter<"Video"> | string | null
   streamUrl?: Prisma.StringNullableFilter<"Video"> | string | null
   thumbnailUrl?: Prisma.StringNullableFilter<"Video"> | string | null
+  thumbnailUrlPublicId?: Prisma.StringNullableFilter<"Video"> | string | null
   duration?: Prisma.IntNullableFilter<"Video"> | number | null
   size?: Prisma.FloatNullableFilter<"Video"> | number | null
   format?: Prisma.StringNullableFilter<"Video"> | string | null
@@ -318,8 +338,10 @@ export type VideoOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrderInput | Prisma.SortOrder
   originalUrl?: Prisma.SortOrder
+  originalUrlPubicId?: Prisma.SortOrderInput | Prisma.SortOrder
   streamUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   thumbnailUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  thumbnailUrlPublicId?: Prisma.SortOrderInput | Prisma.SortOrder
   duration?: Prisma.SortOrderInput | Prisma.SortOrder
   size?: Prisma.SortOrderInput | Prisma.SortOrder
   format?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -341,8 +363,10 @@ export type VideoScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Video"> | string
   title?: Prisma.StringNullableWithAggregatesFilter<"Video"> | string | null
   originalUrl?: Prisma.StringWithAggregatesFilter<"Video"> | string
+  originalUrlPubicId?: Prisma.StringNullableWithAggregatesFilter<"Video"> | string | null
   streamUrl?: Prisma.StringNullableWithAggregatesFilter<"Video"> | string | null
   thumbnailUrl?: Prisma.StringNullableWithAggregatesFilter<"Video"> | string | null
+  thumbnailUrlPublicId?: Prisma.StringNullableWithAggregatesFilter<"Video"> | string | null
   duration?: Prisma.IntNullableWithAggregatesFilter<"Video"> | number | null
   size?: Prisma.FloatNullableWithAggregatesFilter<"Video"> | number | null
   format?: Prisma.StringNullableWithAggregatesFilter<"Video"> | string | null
@@ -356,8 +380,10 @@ export type VideoCreateInput = {
   id?: string
   title?: string | null
   originalUrl: string
+  originalUrlPubicId?: string | null
   streamUrl?: string | null
   thumbnailUrl?: string | null
+  thumbnailUrlPublicId?: string | null
   duration?: number | null
   size?: number | null
   format?: string | null
@@ -371,8 +397,10 @@ export type VideoUncheckedCreateInput = {
   id?: string
   title?: string | null
   originalUrl: string
+  originalUrlPubicId?: string | null
   streamUrl?: string | null
   thumbnailUrl?: string | null
+  thumbnailUrlPublicId?: string | null
   duration?: number | null
   size?: number | null
   format?: string | null
@@ -386,8 +414,10 @@ export type VideoUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   originalUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  originalUrlPubicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   streamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrlPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   duration?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   size?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   format?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -401,8 +431,10 @@ export type VideoUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   originalUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  originalUrlPubicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   streamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrlPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   duration?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   size?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   format?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -416,8 +448,10 @@ export type VideoCreateManyInput = {
   id?: string
   title?: string | null
   originalUrl: string
+  originalUrlPubicId?: string | null
   streamUrl?: string | null
   thumbnailUrl?: string | null
+  thumbnailUrlPublicId?: string | null
   duration?: number | null
   size?: number | null
   format?: string | null
@@ -431,8 +465,10 @@ export type VideoUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   originalUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  originalUrlPubicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   streamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrlPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   duration?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   size?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   format?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -445,8 +481,10 @@ export type VideoUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   originalUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  originalUrlPubicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   streamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrlPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   duration?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   size?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   format?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -465,8 +503,10 @@ export type VideoCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   originalUrl?: Prisma.SortOrder
+  originalUrlPubicId?: Prisma.SortOrder
   streamUrl?: Prisma.SortOrder
   thumbnailUrl?: Prisma.SortOrder
+  thumbnailUrlPublicId?: Prisma.SortOrder
   duration?: Prisma.SortOrder
   size?: Prisma.SortOrder
   format?: Prisma.SortOrder
@@ -485,8 +525,10 @@ export type VideoMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   originalUrl?: Prisma.SortOrder
+  originalUrlPubicId?: Prisma.SortOrder
   streamUrl?: Prisma.SortOrder
   thumbnailUrl?: Prisma.SortOrder
+  thumbnailUrlPublicId?: Prisma.SortOrder
   duration?: Prisma.SortOrder
   size?: Prisma.SortOrder
   format?: Prisma.SortOrder
@@ -500,8 +542,10 @@ export type VideoMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   originalUrl?: Prisma.SortOrder
+  originalUrlPubicId?: Prisma.SortOrder
   streamUrl?: Prisma.SortOrder
   thumbnailUrl?: Prisma.SortOrder
+  thumbnailUrlPublicId?: Prisma.SortOrder
   duration?: Prisma.SortOrder
   size?: Prisma.SortOrder
   format?: Prisma.SortOrder
@@ -556,8 +600,10 @@ export type VideoCreateWithoutLectureInput = {
   id?: string
   title?: string | null
   originalUrl: string
+  originalUrlPubicId?: string | null
   streamUrl?: string | null
   thumbnailUrl?: string | null
+  thumbnailUrlPublicId?: string | null
   duration?: number | null
   size?: number | null
   format?: string | null
@@ -570,8 +616,10 @@ export type VideoUncheckedCreateWithoutLectureInput = {
   id?: string
   title?: string | null
   originalUrl: string
+  originalUrlPubicId?: string | null
   streamUrl?: string | null
   thumbnailUrl?: string | null
+  thumbnailUrlPublicId?: string | null
   duration?: number | null
   size?: number | null
   format?: string | null
@@ -600,8 +648,10 @@ export type VideoUpdateWithoutLectureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   originalUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  originalUrlPubicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   streamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrlPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   duration?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   size?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   format?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -614,8 +664,10 @@ export type VideoUncheckedUpdateWithoutLectureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   originalUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  originalUrlPubicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   streamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrlPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   duration?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   size?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   format?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -630,8 +682,10 @@ export type VideoSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   id?: boolean
   title?: boolean
   originalUrl?: boolean
+  originalUrlPubicId?: boolean
   streamUrl?: boolean
   thumbnailUrl?: boolean
+  thumbnailUrlPublicId?: boolean
   duration?: boolean
   size?: boolean
   format?: boolean
@@ -646,8 +700,10 @@ export type VideoSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   id?: boolean
   title?: boolean
   originalUrl?: boolean
+  originalUrlPubicId?: boolean
   streamUrl?: boolean
   thumbnailUrl?: boolean
+  thumbnailUrlPublicId?: boolean
   duration?: boolean
   size?: boolean
   format?: boolean
@@ -662,8 +718,10 @@ export type VideoSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   id?: boolean
   title?: boolean
   originalUrl?: boolean
+  originalUrlPubicId?: boolean
   streamUrl?: boolean
   thumbnailUrl?: boolean
+  thumbnailUrlPublicId?: boolean
   duration?: boolean
   size?: boolean
   format?: boolean
@@ -678,8 +736,10 @@ export type VideoSelectScalar = {
   id?: boolean
   title?: boolean
   originalUrl?: boolean
+  originalUrlPubicId?: boolean
   streamUrl?: boolean
   thumbnailUrl?: boolean
+  thumbnailUrlPublicId?: boolean
   duration?: boolean
   size?: boolean
   format?: boolean
@@ -689,7 +749,7 @@ export type VideoSelectScalar = {
   updatedAt?: boolean
 }
 
-export type VideoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "originalUrl" | "streamUrl" | "thumbnailUrl" | "duration" | "size" | "format" | "status" | "lectureId" | "createdAt" | "updatedAt", ExtArgs["result"]["video"]>
+export type VideoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "originalUrl" | "originalUrlPubicId" | "streamUrl" | "thumbnailUrl" | "thumbnailUrlPublicId" | "duration" | "size" | "format" | "status" | "lectureId" | "createdAt" | "updatedAt", ExtArgs["result"]["video"]>
 export type VideoInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   lecture?: boolean | Prisma.LectureDefaultArgs<ExtArgs>
 }
@@ -709,8 +769,10 @@ export type $VideoPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     id: string
     title: string | null
     originalUrl: string
+    originalUrlPubicId: string | null
     streamUrl: string | null
     thumbnailUrl: string | null
+    thumbnailUrlPublicId: string | null
     duration: number | null
     size: number | null
     format: string | null
@@ -1145,8 +1207,10 @@ export interface VideoFieldRefs {
   readonly id: Prisma.FieldRef<"Video", 'String'>
   readonly title: Prisma.FieldRef<"Video", 'String'>
   readonly originalUrl: Prisma.FieldRef<"Video", 'String'>
+  readonly originalUrlPubicId: Prisma.FieldRef<"Video", 'String'>
   readonly streamUrl: Prisma.FieldRef<"Video", 'String'>
   readonly thumbnailUrl: Prisma.FieldRef<"Video", 'String'>
+  readonly thumbnailUrlPublicId: Prisma.FieldRef<"Video", 'String'>
   readonly duration: Prisma.FieldRef<"Video", 'Int'>
   readonly size: Prisma.FieldRef<"Video", 'Float'>
   readonly format: Prisma.FieldRef<"Video", 'String'>

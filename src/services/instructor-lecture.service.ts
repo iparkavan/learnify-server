@@ -60,10 +60,12 @@ export const instructorUpdateLectureService = async ({
       upsert: {
         create: {
           originalUrl: body.content.video.url,
+          originalUrlPubicId: body.content.video.publicId,
           duration: body.content.video.duration || 0,
         },
         update: {
           originalUrl: body.content.video.url,
+          originalUrlPubicId: body.content.video.publicId,
           duration: body.content.video.duration || 0,
         },
       },

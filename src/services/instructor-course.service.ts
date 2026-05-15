@@ -2,6 +2,7 @@ import slugify from "slugify";
 import { prisma } from "../lib/schema";
 import { NotFoundException, UnauthorizedException } from "../utils/app-error";
 import { UpdateCourseType } from "../validations/course.validation";
+import cloudinary from "../config/cloudinary.config";
 
 export const createCourseService = async (title: string, userId: string) => {
   const instructorProfile = await prisma.instructorProfile.findUnique({
@@ -121,4 +122,52 @@ export const getCourseByIdService = async (courseId: string) => {
   });
 
   return { course };
+};
+
+export const deleteCourseByIdService = async (courseId: string) => {
+  const course = await prisma.course.findUnique({
+    where: { id: courseId },
+    include: {
+      sections: {
+        include: {
+          lectures: {
+            include: {
+              video: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  if (!course) {
+    throw new Error("Course not found");
+  }
+
+  if (course.thumbnailPublicId) {
+    await cloudinary.uploader.destroy(course.thumbnailPublicId);
+  }
+
+  if (course.promoVideoPublicId) {
+    await cloudinary.uploader.destroy(course.promoVideoPublicId, {
+      resource_type: "video",
+    });
+  }
+
+  for (const section of course.sections) {
+    for (const lecture of section.lectures) {
+      if (lecture.video?.originalUrlPubicId) {
+        await cloudinary.uploader.destroy(lecture.video.originalUrlPubicId, {
+          resource_type: "video",
+        });
+      }
+    }
+  }
+  // delete cloudinary/s3 assets here
+
+  return prisma.course.delete({
+    where: {
+      id: courseId,
+    },
+  });
 };

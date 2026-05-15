@@ -1,10 +1,12 @@
 import { v2 as cloudinary } from "cloudinary";
 
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
-  api_key: process.env.CLOUDINARY_API_KEY!,
-  api_secret: process.env.CLOUDINARY_API_SECRET!,
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
+
+export default cloudinary;
 
 export const generateUploadSignature = (folder: string) => {
   const timestamp = Math.round(Date.now() / 1000);
@@ -26,15 +28,74 @@ export const generateUploadSignature = (folder: string) => {
   };
 };
 
-export const deleteVideoFromCloudinary = async (publicId: string) => {
+export const deleteImageFromCloudinary = async (publicId: string) => {
   try {
-    const result = await cloudinary.uploader.destroy(publicId, {
-      resource_type: "video", // ⚠️ VERY IMPORTANT
-    });
-
-    return result;
+    return await cloudinary.uploader.destroy(publicId);
   } catch (error) {
-    console.error("Cloudinary delete error:", error);
+    console.error("Cloudinary image delete error:", error);
+
     throw error;
   }
 };
+
+export const deleteVideoFromCloudinary = async (publicId: string) => {
+  try {
+    return await cloudinary.uploader.destroy(publicId, {
+      resource_type: "video",
+    });
+  } catch (error) {
+    console.error("Cloudinary video delete error:", error);
+
+    throw error;
+  }
+};
+
+// import { v2 as cloudinary } from "cloudinary";
+
+// cloudinary.config({
+//   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+//   api_key: process.env.CLOUDINARY_API_KEY,
+//   api_secret: process.env.CLOUDINARY_API_SECRET,
+// });
+
+// export const generateUploadSignature = (folder: string) => {
+//   const timestamp = Math.round(Date.now() / 1000);
+
+//   const signature = cloudinary.utils.api_sign_request(
+//     {
+//       timestamp,
+//       folder,
+//     },
+//     process.env.CLOUDINARY_API_SECRET!,
+//   );
+
+//   return {
+//     timestamp,
+//     signature,
+//     folder,
+//     apiKey: process.env.CLOUDINARY_API_KEY,
+//     cloudName: process.env.CLOUDINARY_CLOUD_NAME,
+//   };
+// };
+
+// export const deleteImageFromCloudinary = async (publicId: string) => {
+//   try {
+//     return await cloudinary.uploader.destroy(publicId);
+//   } catch (error) {
+//     console.error("Cloudinary image delete error:", error);
+
+//     throw error;
+//   }
+// };
+
+// export const deleteVideoFromCloudinary = async (publicId: string) => {
+//   try {
+//     return await cloudinary.uploader.destroy(publicId, {
+//       resource_type: "video",
+//     });
+//   } catch (error) {
+//     console.error("Cloudinary video delete error:", error);
+
+//     throw error;
+//   }
+// };

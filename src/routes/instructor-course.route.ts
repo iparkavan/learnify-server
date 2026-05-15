@@ -3,6 +3,7 @@ import { requirePermission } from "../middlewares/requirePermission.middleware";
 import { PermissionType } from "../generated/prisma/enums";
 import {
   createCourseController,
+  deleteCourseByIdController,
   getCourseByIdController,
   updateCourseController,
 } from "../controllers/instructor-course.controller";
@@ -35,6 +36,12 @@ instructorCourseRoutes.get(
   "/courses/:courseId",
   requirePermission(PermissionType.UPDATE_COURSE),
   getCourseByIdController,
+);
+
+instructorCourseRoutes.delete(
+  `/courses/:courseId`,
+  requirePermission(PermissionType.DELETE_COURSE),
+  deleteCourseByIdController,
 );
 
 // INSTRUCTOR SECTION ROUTES
